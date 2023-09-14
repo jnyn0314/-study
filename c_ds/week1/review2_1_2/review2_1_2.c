@@ -65,5 +65,8 @@ int main(void) {
 	p3 = createScore(100, 100);
 	printScore(p3);
 
+	free(p1);
+	free(p2);
+
 	return 0;
 }
