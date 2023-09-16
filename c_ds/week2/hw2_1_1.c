@@ -1,7 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include<stdio.h>
 #include<stdlib.h>
-#define MAX_STACK_SIZE 100
+#define MAX_STACK_SIZE 3
 typedef int element;
 typedef struct {
 	element data[MAX_STACK_SIZE];
@@ -40,29 +40,53 @@ element peek(StackType* s) {
 void stack_print(StackType *s) {
 	if (is_empty(s)) {
 		printf("<empty>\n--\n");
-		return; // 함수의 실행이 성공적으로 완료되었을 때
+		return;
 	}
-	
-	printf("%d ", pop(s));
-
-	if (s->top > 0)
-		printf("<- top\n");
-	else
-		printf("\n");
+	else {
+		for (int i = s->top; i >= 0; i--) {
+			if (i == s->top) {
+				printf("%d <- top\n", s->data[i]);
+			}
+			else
+				printf("%d\n", s->data[i]);
+		}
+		printf("--\n");
+	}
+	return;
 }
 int main(void){
 
 	StackType s; // 스택을 정적으로 생성
-
+	
 	init_stack(&s);
+	stack_print(&s);
  
 	push(&s, 10);
-	push(&s, 20);	
-	push(&s, 30);
-	
-	stack_print(&s);
-	stack_print(&s);
 	stack_print(&s);
 
+	push(&s, 20);
+	stack_print(&s);
+	
+	push(&s, 30);
+	stack_print(&s);
+	
+	push(&s, 40);
+	stack_print(&s);
+
+	pop(&s);
+	stack_print(&s);
+
+	push(&s, 50);
+	stack_print(&s);
+
+	pop(&s);
+	stack_print(&s);
+
+	pop(&s);
+	stack_print(&s);
+
+	pop(&s);
+	stack_print(&s);
+	
 	return 0;
 } 
