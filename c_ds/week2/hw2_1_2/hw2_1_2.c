@@ -1,7 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h> // 문자열 처리를 위해 추가
+#include <string.h> 
 
 #define MAX_STACK_SIZE 3
 #define MAX_STRING 100
@@ -10,7 +10,7 @@ typedef int element;
 
 typedef struct {
     element data[MAX_STACK_SIZE];
-    char name[MAX_STACK_SIZE][MAX_STRING]; // 수정된 부분
+    char name[MAX_STACK_SIZE][MAX_STRING]; 
     int top;
 } StackType;
 
@@ -26,14 +26,14 @@ int is_full(StackType* s) {
     return (s->top == (MAX_STACK_SIZE - 1));
 }
 
-void push(StackType* s, element item, const char* name) { // 수정된 부분
+void push(StackType* s, element item, char* name) { 
     if (is_full(s)) {
         fprintf(stderr, "스택 포화 에러\n");
         return;
     }
     else {
         s->data[++(s->top)] = item;
-        strcpy(s->name[s->top], name); // 문자열 복사
+        strcpy(s->name[s->top], name); // 이미 위에서 top이 하나 증가했음
     }
 }
 
@@ -42,10 +42,7 @@ element pop(StackType* s) {
         fprintf(stderr, "스택 공백 에러\n");
         exit(1);
     }
-    else {
-        s->top--; // 데이터를 제거할 때는 값을 그냥 감소시키면 됨
-    }
-    return s->data[s->top + 1];
+    return s->data[s->top--];
 }
 
 element peek(StackType* s) {
