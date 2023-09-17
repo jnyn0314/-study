@@ -10,63 +10,80 @@
         border: 2px solid black;
         border-collapse: collapse;
         table-layout:fixed; 
-        width:100px;
-        height:100px;
+        width:80%;
+        height: 400px;
+        margin-top: 20px;
+        margin-left: auto;
+        margin-right: auto;
       }
       tr, td{
         border: 2px solid black;
+        text-align: center;
+      }
+      h3{
+        text-align: center;
+        margin-top: 30px;
+        padding-bottom: 5px;
+      }
+      th{
+        font-weight: 550;
+        font-size: 20px;
+      }
+      .date{
+        text-align: center;
+        font-size: 13px;
       }
     </style>
   </head>
   <body>
-    <h1>강의 시간표</h1>
+    <h3>강의 시간표</h3>
     <p>
       <table>
         <thead>
           <tr>
             <th>2학년</th>
-            <td>월</td>
-            <td>화</td>
-            <td>수</td>
-            <td>목</td>
-            <td>금</td>
+            <td class="date">월</td>
+            <td class="date">화</td>
+            <td class="date">수</td>
+            <td class="date">목</td>
+            <td class="date">금</td>
           </tr>
         </thead>
         <tbody>
           <tr>
             <th>1</th>
             <td></td>
-            <td rowspan="2">자료구조</td>
-            <td>네트워크</td>
+            <td rowspan="2" bgcolor="#FFE08C">자료구조</td>
+            <td bgcolor="#FFE08C">네트워크</td>
             <td></td>
-            <td>네트워크</td>
+            <td bgcolor="#FFE08C">네트워크</td>
           </tr>
           <tr>
             <th>2</th>
-            <td rowspan="2">데이터베이스개론</td>
+            <td rowspan="2" bgcolor="#FFE08C">데이터베이스개론</td>
             <td></td>
             <td></td>
-            <td>운영체제</td>
+            <td bgcolor="#B2CCFF">운영체제</td>
           </tr>
           <tr>
             <th>3</th>
             <td></td>
-            <td>운영체제</td>
+            <td bgcolor="#B2CCFF">운영체제</td>
             <td></td>
             <td rowspan="4">사회봉사</td>
           </tr>
           <tr>
             <th>4</th>
-            <td rowspan="2">웹프로그래밍</td>
-            <td>창의와감성</td>
+            <td rowspan="2" bgcolor="#B2CCFF">웹프로그래밍</td>
+            <td bgcolor="#BDBDBD">창의와감성</td>
             <td></td>
-            <td>창의와감성</td>
+            <td bgcolor="#BDBDBD">창의와감성</td>
           </tr>
           <tr>
             <th>5</th>
             <td></td>
             <td></td>
-            <td rowspan="2">소프트웨어프로그래밍</td>
+            <td rowspan="2" bgcolor="#B2CCFF">소프트웨어프로그래밍</td>
           </tr>
           <tr>
             <th>6</th>
