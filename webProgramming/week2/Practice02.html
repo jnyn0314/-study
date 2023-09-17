@@ -9,11 +9,18 @@
                     border-collapse: collapse;
                     margin:auto;
                     margin-top: 10px;
+                    width:800px;
+                    height: 650px;
                 }
                 thead, tfoot, .title{
                     background-color:#ECECEC;
                     text-align: center;
                     font-weight:600;
+                }
+                #first_comment{
+                    overflow: scroll;
+                    width:750px;
+                    height:150px;
                 }
             </style>
         </head>
@@ -79,7 +86,7 @@
                     </tr>
                     <tr>
                         <td class="title">가입인사</td>
-                        <td><textarea>회원들에게 간단한 가입인사를 남겨주세요</textarea></td>
+                        <td><textarea id="first_comment">회원들에게 간단한 가입인사를 남겨주세요</textarea></td>
                     </tr>
                     <tr>
                         <td class="title">증명사진</td>
