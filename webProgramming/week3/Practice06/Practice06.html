@@ -1,0 +1,53 @@
+<!--20220803 컴퓨터학과 정여진-->
+<!--크롬 최적화-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice06</title>
+    <style>
+        html, body{
+            height:100%; overflow: hidden;
+        }
+        table{
+            width:40%;
+            height:95%;
+            margin: 5px auto;
+            border-collapse: collapse;
+            border-color: #ededed;
+        }
+        .border{
+            background-color: #32CCFE;
+            width:10%; /*td의 부모인 tr의 width:100%로 뒀으니까 그거의 10%*/
+            height:85px; 
+        }
+        h1{
+            text-align: center;
+        }
+        #img_cal{
+            width:90%;
+            margin:auto;
+            display: block; 
+        }
+        #button{
+            margin:auto;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <table border="1">
+        <tr>
+            <td colspan="2" class="border"><h1>CalCuLaTor</h1></td>
+        </tr>
+        <tr height="300px">
+            <td><input type="image" src="image/cal.jpg" id="img_cal"></td>
+            <td><input type="button" value="계산하기" id="button"></td>
+        </tr>
+        <tr>
+            <td colspan="2" class="border"></td>
+        </tr>
+    </table>
+</body>
+</html>
