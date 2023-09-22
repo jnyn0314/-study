@@ -35,6 +35,16 @@
             display: block;
         }
     </style>
+    <script type="text/javascript">
+        function calc(){
+            var exp = prompt("계산할 수식을 입력하세요");
+
+            if(exp != null){
+                var result = eval(exp);
+                alert(result);
+            }
+        }
+    </script>
 </head>
 <body>
     <table border="1">
@@ -43,7 +53,7 @@
         </tr>
         <tr height="300px">
             <td><input type="image" src="image/cal.jpg" id="img_cal"></td>
-            <td><input type="button" value="계산하기" id="button"></td>
+            <td><input type="button" value="계산하기" id="button" onclick="calc()"></td>
         </tr>
         <tr>
             <td colspan="2" class="border"></td>
