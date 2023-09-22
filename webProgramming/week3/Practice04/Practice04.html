@@ -22,8 +22,11 @@
                 background-color:#ffff99;
             }
         </style>
+        <script>
+            frm1.id.focus();
+        </script>
     </head>
-            <body onload="alert('어서오세요')">
+            <body onload="alert('어서오세요'); frm1.id.focus();">
         <table>
             <form name="frm1">
                 <tr>
@@ -64,7 +67,7 @@
                     <td><input type="text" name="pwd" class="pwd"></td>
                 </tr>
                 <tr>
-                    <th><input type="button" value="로그인"></th>
+                    <th><input type="button" value="로그인" onclick="alert('회원이 아니군요')"></th>
                     <td><input type="button" value="가입하기" onclick="document.location='member2.html'"></td>
                 </tr>
             </form>
