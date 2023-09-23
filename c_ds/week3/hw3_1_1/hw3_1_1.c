@@ -63,7 +63,8 @@ int get_count(QueueType *p) {
 }
 
 void print_queue(QueueType* p) {
-	printf("%s", p->man->name);
+	for(int i = p->front + 1; i <= p->rear; i++)
+		printf("%s ", p->man[i].name);
 }
 
 int main(void) {
@@ -76,8 +77,17 @@ int main(void) {
 	printf("이름을 입력:");
 	scanf("%s", newPerson.name);
 	enqueue(&manQ, newPerson);
+
+	printf("이름을 입력:");
+	scanf("%s", newPerson.name);
+	enqueue(&manQ, newPerson);
+
+	printf("이름을 입력:");
+	scanf("%s", newPerson.name);
+	enqueue(&manQ, newPerson);
+
 	printf("%d명: ", get_count(&manQ));
 	print_queue(&manQ);
-
+	
 	return 0;
 }
