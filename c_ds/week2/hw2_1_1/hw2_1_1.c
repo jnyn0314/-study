@@ -42,17 +42,13 @@ void stack_print(StackType *s) {
 		printf("<empty>\n--\n");
 		return;
 	}
-	else {
-		for (int i = s->top; i >= 0; i--) {
-			if (i == s->top) {
-				printf("%d <- top\n", s->data[i]);
-			}
-			else
-				printf("%d\n", s->data[i]);
+	else if(!is_empty(s)){
+		printf("%d <- top\n", s->data[s->top]);
+		for (int i = s->top - 1; i >= 0; i--)
+			printf("%d\n", s->data[i]);
+
 		}
-		printf("--\n");
-	}
-	return;
+	printf("--\n");
 }
 int main(void){
 
