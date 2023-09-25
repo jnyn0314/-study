@@ -1,8 +1,8 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-#include <stdlib.h>
+#include <stdlib.h> // exit(1)
 
-#define MAX_LIST_SIZE 100
+#define MAX_LIST_SIZE 5
 
 typedef int element;
 typedef struct {
@@ -35,18 +35,22 @@ void print_list(ArrayListType* L) {
 	printf("리스트 끝\n");
 }
 void insert_last(ArrayListType* L, element item) {
-	if (is_full(L))
-		error("리스트 오버플로우");
+	if (is_full(L)) {
+		printf("리스트 오버플로우\n");
+		return;
+	}
 	L->array[L->size++] = item;
 }
 void insert_first(ArrayListType* L, element item) {
-	if (is_full(L))
-		error("리스트 오버플로우");
+	if (is_full(L)) {
+		printf("리스트 오버플로우\n");
+		return;
+	}
 	L->size++;
-	for (int i = 0; i <= L->size; i++) 
+	
+	for (int i = L->size - 1; i >= 0; i--)
 		L->array[i + 1] = L->array[i];
 	L->array[0] = item;
-	
 }
 void insert(ArrayListType* L, int pos, element item) {
 	if (!is_full(L) && pos >= 0 && pos <= L->size) {
@@ -73,6 +77,25 @@ void clear_list(ArrayListType* L) {
 	
 	L->size = 0; // !!
 }
+int get_length(ArrayListType* L) {
+	int count = 0;
+	
+	for (int i = 0; i < L->size; i++)
+		count++;
+	return count;
+}
+element replace(ArrayListType* L, int pos, int item) {
+	int temp = 0;
+
+	temp = L->array[pos];
+	L->array[pos] = item;
+	item = temp;
+
+	return L->array[pos];
+}
+void is_in_list(ArrayListType* L, int item) {
+	// 수정
+}
 int main(void) {
 
 	ArrayListType list1;
@@ -82,6 +105,9 @@ int main(void) {
 	insert(&list1, 0, 10);
 	print_list(&list1);
 	clear_list(&list1);
+	print_list(&list1);
+
+	insert_last(&list1, 90);
 	print_list(&list1);
 
 	insert(&list1, 0, 30);
@@ -98,8 +124,21 @@ int main(void) {
 	insert_last(&list1, 99);
 	print_list(&list1);
 
-	insert_first(&list1, 1);
+	insert_first(&list1, 1); // 리스트 오버플로우 출력해야돼 -> 바로 끝나버리네 -> exit(1) 지웠더니 끝까지 돌아(100까지)
 	print_list(&list1);
 	
+	printf("길이는 %d\n", get_length(&list1));
+	printf("3번째 데이터는 %d\n", get_entry(&list1, 2));
+	
+	replace(&list1, 3, 40);
+	printf("20은 리스트에 %s\n", is_in_list(&list1, 20) ? "있습니다" : "없습니다");
+	printf("22는 리스트에 %s\n", is_in_list(&list1, 22) ? "있습니다" : "없습니다");
+
+	/*
+	delete_by_key(&list1, 20);
+	print_list(&list1);
+	delete_by_key(&list1, 22);
+	print_list(&list1);
+	*/
 	return 0;
 }
