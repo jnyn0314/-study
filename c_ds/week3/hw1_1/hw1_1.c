@@ -93,8 +93,22 @@ element replace(ArrayListType* L, int pos, int item) {
 
 	return L->array[pos];
 }
-void is_in_list(ArrayListType* L, int item) {
-	// 수정
+int is_in_list(ArrayListType* L, int item) {
+	for (int i = 0; i < L->size; i++) {
+		if (item == L->array[i])
+			return 1;
+	}
+	return 0;
+}
+element delete_by_key(ArrayListType *L, int item) {
+	for (int i = 0; i < L->size; i++) {
+		if (item == L->array[i]) {
+			delete(L, i);
+			return L;
+		}
+	}
+	printf("삭제하려는 key값 %d는 리스트에 없습니다.\n", item);
+	return 0;
 }
 int main(void) {
 
@@ -131,14 +145,14 @@ int main(void) {
 	printf("3번째 데이터는 %d\n", get_entry(&list1, 2));
 	
 	replace(&list1, 3, 40);
+	print_list(&list1);
 	printf("20은 리스트에 %s\n", is_in_list(&list1, 20) ? "있습니다" : "없습니다");
 	printf("22는 리스트에 %s\n", is_in_list(&list1, 22) ? "있습니다" : "없습니다");
 
-	/*
 	delete_by_key(&list1, 20);
 	print_list(&list1);
 	delete_by_key(&list1, 22);
 	print_list(&list1);
-	*/
+	
 	return 0;
 }
