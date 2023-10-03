@@ -156,22 +156,36 @@ ListNode* delete_by_key(ListNode* head, int key) {
 			}
 		}
 		else
-			printf("key가 node에 없음");
+			error("key가 node에 없음");
 		prev = p;
 		p = p->link;
 	}
 	return head;
 }
 ListNode* insert_pos(ListNode* head, int pos, element value) {
-	ListNode* temp = head;
+	if (pos > get_length(head)) 
+		error("pos값이 너무 큽니다.");
+	if (pos < 0) 
+		error("pos값이 너무 작습니다.");
 	
+	ListNode* temp = head;
 	ListNode* p = (ListNode*)malloc(sizeof(ListNode));
 	p->number = value;
-	
-	if (pos == 0) 
-		head = insert_first(head, value);
-	else if(pos == get_length(head) - 1) 
-		head = insert_last(head, value);
+
+	if (pos == 0) { // insert_first
+		p->link = head;
+		head = p;
+	}
+	else if (pos == get_length(head)) { // insert_last
+		if (head == NULL)
+			head = p;
+		else {
+			while (temp->link != NULL)
+				temp = temp->link;
+			temp->link = p;
+			p->link = NULL; // !
+		}
+	}
 	else {
 		for (int i = 0; i < pos - 1; i++) 
 			temp = temp->link;
@@ -184,11 +198,30 @@ ListNode* delete_pos(ListNode* head, int pos) {
 	ListNode* temp = head;
 	ListNode* prevTemp = NULL;
 	ListNode* removed;
-	
-	if (pos == 0)
-		head = delete_first(head);
-	else if (pos == get_length(head) - 1)
-		head = delete_last(head);
+
+	if (pos < 0)
+		error("pos값이 너무 작습니다.\n");
+	else if (pos > get_length(head))
+		error("pos값이 너무 큽니다.\n");
+
+	if (pos == 0) { // delete_first
+		if (head == NULL)
+			error("삭제할 항목이 없음\n");
+		else {
+			temp = head;
+			head = temp->link;
+			free(temp);
+		}
+	}
+	else if (pos == get_length(head)) { // delete_last
+		// get_len에서 이미 예외 처리 함
+		for (int i = 0; i < pos - 1; i++) {
+			prevTemp = temp;
+			temp = temp->link;
+		}
+		prevTemp->link = NULL;
+		free(temp);
+	}
 	else {
 		for (int i = 0; i < pos - 1; i++) {
 			prevTemp = temp;
@@ -256,12 +289,12 @@ int main(void) {
 	print_list(list1);
 	printf("\n");
 	
-	printf("insert_pos함수, pos = 2라면? "); 
-	list1 = insert_pos(list1, 2, 60);
+	printf("insert_pos함수, pos = 4라면? "); 
+	list1 = insert_pos(list1, 4, 60);
 	print_list(list1);
 	
-	printf("\ndelete_pos함수, pos = 0? ");
-	list1 = delete_pos(list1, 0);
+	printf("\ndelete_pos함수, pos = 5? ");
+	list1 = delete_pos(list1, 5);
 	print_list(list1);
 	return 0;
 }
