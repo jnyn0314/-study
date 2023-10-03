@@ -135,43 +135,43 @@ element get_entry(ListNode* head, int pos) {
 		p = p->link;
 	return p->number;
 }
-/*
 ListNode* delete_by_key(ListNode* head, int key) {
 	ListNode* p = head;
-	ListNode* remove = NULL;
+	ListNode* prev = NULL;
 
 	if (head == NULL)
-		return head;
-
-	for (int i = 0; i < key - 1; i++) {
-		if (p == NULL)
-			error("list길이에 비해 key값이 너무 큽니다.");
+		error("삭제할 항목이 없음");
+	
+	while (p != NULL) {
+		if (p->number == key) {
+			if (prev == NULL) {
+				head = p->link;
+				free(p);
+				return head;
+			}
+			else {
+				prev->link = p->link;
+				free(p);
+				return head;
+			}
+		}
+		else
+			printf("key가 node에 없음");
+		prev = p;
 		p = p->link;
 	}
-
-	if (p == NULL || p->link == NULL)
-		error("list길이에 비해 key값이 너무 큽니다.");
-
-	remove->link = p->link;
-	p->link = NULL;
-	free(p);
-
 	return head;
 }
-*/
 ListNode* insert_pos(ListNode* head, int pos, element value) {
 	ListNode* temp = head;
 	
 	ListNode* p = (ListNode*)malloc(sizeof(ListNode));
 	p->number = value;
 	
-	if (pos == 0) {
-		p->link = head;
-		// head = p;
-	}
-	else if(pos == get_length(head) - 1) {
-		temp->link = p;
-	}
+	if (pos == 0) 
+		head = insert_first(head, value);
+	else if(pos == get_length(head) - 1) 
+		head = insert_last(head, value);
 	else {
 		for (int i = 0; i < pos - 1; i++) 
 			temp = temp->link;
@@ -185,10 +185,10 @@ ListNode* delete_pos(ListNode* head, int pos) {
 	ListNode* prevTemp = NULL;
 	ListNode* removed;
 	
-	if (pos == 1) {
-		prevTemp = head->link;
-		free(temp);
-	}
+	if (pos == 0)
+		head = delete_first(head);
+	else if (pos == get_length(head) - 1)
+		head = delete_last(head);
 	else {
 		for (int i = 0; i < pos - 1; i++) {
 			prevTemp = temp;
@@ -250,18 +250,18 @@ int main(void) {
 	printf("노드 갯수 출력 : %d\n", get_length(list1));
 	printf("데이터 값을 더한 합 : %d\n", get_total(list1));
 	printf("pos = 2에 있는 data 값 : %d\n", get_entry(list1, 2));
-	/*
-	printf("key = 2일때 list? : ");
-	delete_by_key(list1, 2);
+	
+	printf("key = 20일때 list? : ");
+	list1 = delete_by_key(list1, 20);
 	print_list(list1);
 	printf("\n");
-	*/
+	
 	printf("insert_pos함수, pos = 2라면? "); 
-	insert_pos(list1, 2, 60);
+	list1 = insert_pos(list1, 2, 60);
 	print_list(list1);
 	
-	printf("\ndelete_pos함수, pos = 2? ");
-	delete_pos(list1, 1);
+	printf("\ndelete_pos함수, pos = 0? ");
+	list1 = delete_pos(list1, 0);
 	print_list(list1);
 	return 0;
 }
