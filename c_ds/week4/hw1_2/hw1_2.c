@@ -39,7 +39,7 @@ ListNode* insert_last(ListNode* head, element data) {
 }
 ListNode* delete_first(ListNode* head) {
 	ListNode* removed;
-	if (head == NULL)
+	if (head == NULL) 
 		error("삭제할 항목이 없음");
 	else {
 		removed = head;
@@ -97,16 +97,13 @@ ListNode* concat(ListNode* head1, ListNode* head2) {
 	return head1;
 }
 int is_in_list(ListNode* head, element item) {
-	ListNode* p;
-	p = head;
 	if (head == NULL)
 		error("item이 있는지 확인할 리스트가 없음");
 
-	while (p->link != NULL) {
-		if (p->number == item)
+	while (head != NULL) {
+		if (head->number == item)
 			return 1;
-		else
-			p = p->link;
+		head = head->link;
 	}
 	return 0;
 }
@@ -131,43 +128,44 @@ int get_total(ListNode* head) {
 }
 element get_entry(ListNode* head, int pos) {
 	ListNode* p = head;
-	for (int i = 0; i < pos; i++)
+	int idx = 0;
+
+	if (pos < 0 || get_length(head) <= pos)
+		error("pos error");
+	while (p != NULL) {
+		if (pos == idx) 
+			return p->number;
 		p = p->link;
-	return p->number;
+		idx++;
+	}
+	if (head == NULL) 
+		error("확인할 리스트가 없음\n");
 }
 ListNode* delete_by_key(ListNode* head, int key) {
-	ListNode* p = head;
+	ListNode* temp = head;
 	ListNode* prev = NULL;
-
 	if (head == NULL)
 		error("삭제할 항목이 없음");
 	
-	while (p != NULL) {
-		if (p->number == key) {
-			if (prev == NULL) {
-				head = p->link;
-				free(p);
-				return head;
-			}
-			else {
-				prev->link = p->link;
-				free(p);
-				return head;
-			}
+	if (head->number == key) {
+		head = head->link;
+		free(temp);
+		return head;
+	}
+	while (head != NULL) {
+		if (temp->number == key) {
+			prev->link = temp->link;
+			free(temp);
 		}
-		else
-			error("key가 node에 없음");
-		prev = p;
-		p = p->link;
+		prev = temp;
+		temp = temp->link;
 	}
 	return head;
 }
 ListNode* insert_pos(ListNode* head, int pos, element value) {
-	if (pos > get_length(head)) 
-		error("pos값이 너무 큽니다.");
-	if (pos < 0) 
-		error("pos값이 너무 작습니다.");
-	
+	if (pos < 0 || get_length(head) < pos) 
+		error("pos error");
+		
 	ListNode* temp = head;
 	ListNode* p = (ListNode*)malloc(sizeof(ListNode));
 	p->number = value;
@@ -175,61 +173,39 @@ ListNode* insert_pos(ListNode* head, int pos, element value) {
 	if (pos == 0) { // insert_first
 		p->link = head;
 		head = p;
+		return head;
 	}
-	else if (pos == get_length(head)) { // insert_last
-		if (head == NULL)
-			head = p;
-		else {
-			while (temp->link != NULL)
-				temp = temp->link;
-			temp->link = p;
-			p->link = NULL; // !
-		}
-	}
-	else {
-		for (int i = 0; i < pos - 1; i++) 
-			temp = temp->link;
-		p->link = temp->link;
-		temp->link = p;
-	}
+
+	for (int i = 0; i < pos - 1; i++) 
+		temp = temp->link;
+	p->link = temp->link;
+	temp->link = p;
 	return head;
 }
 ListNode* delete_pos(ListNode* head, int pos) {
 	ListNode* temp = head;
 	ListNode* prevTemp = NULL;
-	ListNode* removed;
 
-	if (pos < 0)
-		error("pos값이 너무 작습니다.\n");
-	else if (pos > get_length(head))
-		error("pos값이 너무 큽니다.\n");
-
-	if (pos == 0) { // delete_first
+	if (pos < 0 || get_length(head) <= pos) 
+		error("pos error");
+	
+	if (pos == 0) { 
 		if (head == NULL)
 			error("삭제할 항목이 없음\n");
 		else {
 			temp = head;
 			head = temp->link;
 			free(temp);
+			return head;
 		}
 	}
-	else if (pos == get_length(head)) { // delete_last
-		// get_len에서 이미 예외 처리 함
-		for (int i = 0; i < pos - 1; i++) {
-			prevTemp = temp;
-			temp = temp->link;
-		}
-		prevTemp->link = NULL;
-		free(temp);
+	for (int i = 0; i < pos - 1; i++) {
+		prevTemp = temp;
+		temp = temp->link;
 	}
-	else {
-		for (int i = 0; i < pos - 1; i++) {
-			prevTemp = temp;
-			temp = temp->link;
-		}
-		prevTemp->link = temp->link;
-		free(temp);
-	}
+	prevTemp->link = temp->link;
+	free(temp);
+
 	return head;
 }
 void print_list(ListNode* head) {
