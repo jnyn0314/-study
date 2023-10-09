@@ -14,72 +14,68 @@ void error(char* message) {
 	fprintf(stderr, "%s\n", message);
 	exit(1);
 }
-ListNode* insert_first(ListNode* head, element data) {
-	ListNode* list = (ListNode*)malloc(sizeof(ListNode));
-	list->data = data;
-	list->link = head;
-	head = list;
-	return head;
-}
-ListNode* insert_pos(ListNode* head, int pos, element value) {
-	if (pos < 0)
-		error("pos값이 너무 작습니다.");
-	else if (pos == 0) { // insert_first
-		ListNode* p = (ListNode*)malloc(sizeof(ListNode));
-		p->data = value;
-		p->link = head;
+ListNode* insert_last(ListNode* head, element data) {
+	ListNode* temp = head;
+	ListNode* p = (ListNode*)malloc(sizeof(ListNode));
+	p->data = data;
+	p->link = NULL;
+
+	if (head == NULL) {
 		head = p;
+		return head;
 	}
 	else {
-		ListNode* temp = head;
-		for (int i = 0; i < pos - 1; i++) {
+		while (temp->link != NULL)
 			temp = temp->link;
-			if (temp == NULL) {
-				error("pos값이 너무 큽니다.");
-			}
-		}
-		ListNode* p = (ListNode*)malloc(sizeof(ListNode));
-		p->data = value;
-		p->link = temp->link;
 		temp->link = p;
 	}
 	return head;
 }
-ListNode* delete_pos(ListNode* head, int pos) {
-	if (pos < 0)
-		error("pos값이 너무 작습니다.");
-	if (head == NULL)
-		error("삭제할 항목이 없음");
+ListNode* insert_pos(ListNode* head, int pos, element value) {
+	if (pos < 0 || get_length(head) < pos)
+		error("pos error");
 
-	if (pos == 0) { // delete_first
-		ListNode* temp = head;
-		head = temp->link;
-		free(temp);
+	ListNode* temp = head;
+	ListNode* p = (ListNode*)malloc(sizeof(ListNode));
+	p->data = value;
+
+	if (pos == 0) { // insert_first
+		p->link = head;
+		head = p;
+		return head;
 	}
-	else {
-		ListNode* temp = head;
-		ListNode* prevTemp = NULL;
-		for (int i = 0; i < pos; i++) {
-			prevTemp = temp;
-			temp = temp->link;
-			if (temp == NULL) {
-				error("pos값이 너무 큽니다.");
-			}
-		}
-		prevTemp->link = temp->link;
-		free(temp);
-	}
+
+	for (int i = 0; i < pos - 1; i++)
+		temp = temp->link;
+	p->link = temp->link;
+	temp->link = p;
 	return head;
 }
-void display_te(ListNode* head) {
-	ListNode* p;
-	p = head;
-	int i;
-	printf("\n-----------text edited---------\n");
-	while (p != NULL) {
-		printf("(%d) %s", p->data.line, p->data);
+ListNode* delete_pos(ListNode* head, int pos) {
+	ListNode* temp = head;
+	ListNode* prevTemp = NULL;
+
+	if (pos < 0 || get_length(head) <= pos)
+		error("pos error");
+
+	if (pos == 0) {
+		if (head == NULL)
+			error("삭제할 항목이 없음\n");
+		else {
+			temp = head;
+			head = temp->link;
+			free(temp);
+			return head;
+		}
 	}
-	printf("------------------------------\n");
+	for (int i = 0; i < pos - 1; i++) {
+		prevTemp = temp;
+		temp = temp->link;
+	}
+	prevTemp->link = temp->link;
+	free(temp);
+
+	return head;
 }
 element get_entry(ListNode* head, int pos) {
 	ListNode* p = head;
@@ -96,6 +92,23 @@ int get_length(ListNode* head) {
 		count++;
 	}
 	return count;
+}
+void print_list(ListNode* head) {
+	ListNode* p;
+	for (p = head; p != NULL; p = p->link)
+		printf("%d->", p->data);
+	printf("\n");
+}
+void display_te(ListNode* head) {
+	ListNode* p;
+	p = head;
+	int pos = 1;
+	printf("\n-----------text edited---------\n");
+	while (p != NULL) {
+		printf("(%d) %s", pos, p->data);
+		p = p->link;
+		pos++;
+	}
 }
 char askChoice(void) {
 	char choice;
@@ -120,43 +133,45 @@ int main(void){
 		switch (choice) {
 		case 'a':
 			printf("텍스트 끝에 삽입할 라인: ");
-			fflush(stdin);
+			while (getchar() != '\n');
 			fgets(newElement.line, MAX_CHAR_PER_LINE, stdin);
-			// 코드 삽입
-			insert_first(list, newElement);
+			list = insert_last(list, newElement);
 			display_te(list);
 			break;
 		case 'i':
 			printf("삽입할 라인 번호: ");
 			scanf("%d", &lineNb);
+			if (lineNb < 0 || lineNb > get_length(list) + 1)
+				error("라인 번호 에러");
 
 			printf("삽입할 라인: ");
-			fflush(stdin);
+			while (getchar() != '\n');
 			fgets(newElement.line, MAX_CHAR_PER_LINE, stdin);
-			// 코드
-			insert_pos(list, lineNb, newElement);
+			list = insert_pos(list, lineNb -1, newElement);
 			display_te(list);
 			break;
 		case 'd':
 			printf("삭제할 라인 번호: ");
 			scanf("%d", &lineNb);
-			delete_pos(list, lineNb);
+			if (lineNb < 0 || lineNb > get_length(list))
+				error("라인 번호 에러");
+			list = delete_pos(list, lineNb - 1);
 			display_te(list);
 			//코드
 			break;
 		case 'v':
 			printf("출력할 라인 번호: ");
 			scanf("%d", &lineNb);
-			if (lineNb >= 1 && lineNb <= get_length(list))
-				printf("(%d) %s\n", lineNb, get_entry(list, lineNb - 1));
-			else
-				error("라인 번호가 범위 내에 없습니다.");
-			display_te(list);
+			if (lineNb < 0 || lineNb > get_length(list))
+				error("라인 번호 에러");
+
+			element lineData = get_entry(list, lineNb - 1);
+			printf("(%d) %s ", lineNb,lineData);
 			break;
 		case 'p':
+			print_list(list);
 			display_te(list);
 		}
-		while (getchar() != '\n');
-		return 0;
+		// while (getchar() != '\n');
 	}
 }
