@@ -203,7 +203,6 @@ ListNode* delete_pos(ListNode* head, int pos) {
 	}
 	prevTemp->link = temp->link;
 	free(temp);
-
 	return head;
 }
 void display(ListNode* head) {
@@ -230,29 +229,42 @@ void add_item(ListNode** phead, int new_item) {
 	}
 	if (total + new_item < 100) {
 		newNode->number = new_item; // 새로운 아이템 삽입
-		newNode->link = NULL;
-		if (*phead == NULL) 
-			*phead = newNode; 
-		else 
-			p->link = newNode; 
+		newNode->link = *phead;
+		*phead = newNode;
 	}
 	else {
 		printf("최대 무게 <100kg> 초과로 아이템 %d를 추가할 수 없음\n", new_item);
 		free(newNode); // 할당한 노드 메모리 해제!!!!
 	}
 }
+char askChoice(ListNode *head) {
+	char choice;
+
+	printf("enter a<dd>, d<elete>, or q<uit>: ");
+	scanf(" %c", &choice);
+	return choice;
+}
 int main(void) {
 	ListNode* list = NULL;
+	char choice;
+	int weight;
 
-	add_item(&list, 20);
-	display(list);
-	add_item(&list, 30);
-	display(list);
-	add_item(&list, 40);
-	display(list);
-	add_item(&list, 50);
-	display(list);
-
-	return 0;
+	while ((choice = askChoice(list)) != 'q') {
+		switch (choice) {
+		case 'a':
+			printf("enter the weight of the item: ");
+			scanf("%d", &weight);
+			add_item(&list, weight);
+			display(list);
+			break;
+		case 'd':
+			printf("enter the weight of the item: ");
+			scanf("%d", &weight);
+			delete_by_key(&list, weight);
+			display(list);
+			break;
+		}
+		while (getchar() != '\n');
+	}
 }
 
