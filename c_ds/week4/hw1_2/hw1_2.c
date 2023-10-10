@@ -152,15 +152,18 @@ ListNode* delete_by_key(ListNode* head, int key) {
 		free(temp);
 		return head;
 	}
-	while (head != NULL) {
-		if (temp->number == key) {
-			prev->link = temp->link;
-			free(temp);
-		}
+	while (temp != NULL && temp->number != key) {
 		prev = temp;
 		temp = temp->link;
 	}
-	return head;
+	// 삭제 대상을 찾지 못한 경우
+	if (temp == NULL) {
+		error("삭제할 항목을 찾을 수 없음");
+		return head;
+	}
+	// 삭제 대상을 찾은 경우
+	prev->link = temp->link;
+	free(temp);
 }
 ListNode* insert_pos(ListNode* head, int pos, element value) {
 	if (pos < 0 || get_length(head) < pos) 
@@ -261,7 +264,7 @@ int main(void) {
 	printf("pos = 2에 있는 data 값 : %d\n", get_entry(list1, 2));
 	
 	printf("key = 20일때 list? : ");
-	list1 = delete_by_key(list1, 20);
+	list1 = delete_by_key(list1, 33);
 	print_list(list1);
 	printf("\n");
 	
