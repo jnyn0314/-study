@@ -164,6 +164,7 @@ ListNode* delete_by_key(ListNode* head, int key) {
 	// 삭제 대상을 찾은 경우
 	prev->link = temp->link;
 	free(temp);
+	return head;
 }
 ListNode* insert_pos(ListNode* head, int pos, element value) {
 	if (pos < 0 || get_length(head) < pos) 
