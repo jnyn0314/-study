@@ -142,6 +142,7 @@ element get_entry(ListNode* head, int pos) {
 ListNode* delete_by_key(ListNode* head, int key) {
 	ListNode* temp = head;
 	ListNode* prev = NULL;
+
 	if (head == NULL)
 		error("삭제할 항목이 없음");
 
@@ -150,14 +151,16 @@ ListNode* delete_by_key(ListNode* head, int key) {
 		free(temp);
 		return head;
 	}
-	while (head != NULL) {
-		if (temp->number == key) {
-			prev->link = temp->link;
-			free(temp);
-		}
+	while (temp != NULL && temp->number != key) {
 		prev = temp;
 		temp = temp->link;
 	}
+	if (temp == NULL) {
+		printf("아이템 %d는 보유하고 있지 않습니다.\n", key);
+		return head;
+	}
+	prev->link = temp->link;
+	free(temp);
 	return head;
 }
 ListNode* insert_pos(ListNode* head, int pos, element value) {
@@ -222,7 +225,7 @@ void add_item(ListNode** phead, int new_item) {
 	if (*phead == NULL) 
 		total = 0; // ?? 수정하면 좋겠다.
 	else {
-		while (p->link != NULL) {
+		while (p != NULL) {
 			total += p->number;
 			p = p->link;
 		}
@@ -254,17 +257,21 @@ int main(void) {
 		case 'a':
 			printf("enter the weight of the item: ");
 			scanf("%d", &weight);
+			if (weight < 0)
+				error("무게가 음수임");
 			add_item(&list, weight);
 			display(list);
 			break;
 		case 'd':
 			printf("enter the weight of the item: ");
 			scanf("%d", &weight);
-			delete_by_key(&list, weight);
+			if (weight < 0)
+				error("무게가 음수임");
+			list = delete_by_key(list, weight);
 			display(list);
 			break;
 		}
-		while (getchar() != '\n');
+		// while (getchar() != '\n');
 	}
 }
 
