@@ -3,38 +3,54 @@
 <!DOCTYPE html>
     <html lang="ko">
         <head>
-            <title>Practice03_3</title>
+            <title>Practice07</title>
             <style>
                 table{
+                    margin: auto;
+                }
+                .tb2{
                     border-collapse: collapse;
                     margin:auto;
-                    margin-top: 10px;
-                    width:900px;
-                    height: 650px;
+                    margin-top: 50px;
+                    width:70%;
+                    height:50px;
                 }
                 thead, tfoot, .title{
                     background-color:#ECECEC;
                     text-align: center;
-                    font-weight:600;
+                    font-weight:400px;
                 }
                 #first_comment{
                     overflow: scroll;
-                    width:750px;
-                    height:150px;
+                    width:200px;
+                    height:100px;
                 }
                 input.imageAlign{
                     vertical-align: middle;
                 }
             </style>
             <script>
-                function member4(){
-                    window.location.href='member4.html'
+                function checkEmail(){
+                    var txtMail = frm3.email.value;
+                    var result = txtMail.indexOf("@");
+                    if(result == -1){
+                        alert('이메일주소 형식이 다릅니다.');
+                    }
+                    else{
+                        alert('사용가능한 이메일 주소입니다.');
+                    }
                 }
             </script>
         </head>
         <body>
-            <form>
-                <table border="1">
+            <table class="tb1">
+                <tr>
+                    <td><input type="image" src="../Practice07/image/eclass_title.jpg" width="100%"></td>
+                </tr>
+                <tr>
+                <form name="frm3">
+                    <td>
+                <table border="1" class="tb2">
                     <thead>
                         <th colspan="2">회원가입</th>
                     </thead>
@@ -42,7 +58,7 @@
                         <tr>
                             <td class="title">아이디</td>
                             <td>
-                                <input type="text" size="33">
+                                <input type="text" size="10">
                                 <input type="image" src="image/check.gif" class="imageAlign">
                             </td>
                         </tr>
@@ -68,8 +84,8 @@
                             <td class="title">휴대폰</td>
                             <td>
                                 <select>
-                                    <option value="1">010</option>
-                                    <option value="2">011</option>    
+                                    <option value="0">010</option>
+                                    <option value="1">011</option>    
                                 </select> -
                                 <input type="text" maxlength="4" size="4"> -
                                 <input type="text" maxlength="4" size="4">
@@ -77,8 +93,9 @@
                         </tr>
                         <tr>
                             <td class="title">이메일</td>
-                            <td><input type="text"></td>
-                            <input type="image" src="image/check.gif" class="imageAlign">
+                            <td><input type="text" name="email" value="소식지 받아보기" onclick="this.value=''">
+                                <input type="image" src="image/check.gif" class="imageAlign" onclick="checkEmail()">
+                            </td>
                         </tr>
                         <tr>
                             <td class="title">생일</td>
@@ -87,11 +104,11 @@
                         <tr>
                             <td class="title">관심분야</td>
                             <td>
-                                <input type="checkbox" name="hobby" value="1">뉴스
-                                <input type="checkbox" name="hobby" value="2" checked>맛집
-                                <input type="checkbox" name="hobby" value="3">책
-                                <input type="checkbox" name="hobby" value="4">영화
-                                <input type="checkbox" name="hobby" value="5">여행
+                                <input type="checkbox" name="hobby" value="0">뉴스
+                                <input type="checkbox" name="hobby" value="1" checked>맛집
+                                <input type="checkbox" name="hobby" value="2">책
+                                <input type="checkbox" name="hobby" value="3">영화
+                                <input type="checkbox" name="hobby" value="4">여행
                             </td>
                         </tr>
                         <tr>
@@ -104,12 +121,15 @@
                             </tr>
                         </tbody>
                     <tfoot>
-                        <td colspan="2" style="text-align: center;">
-                            <input type="button" value="가입하기" onclick="member4()">
+                        <td colspan="2" style="text-align: center">
+                            <input type="button" value="가입하기">
                             <input type="reset" value="다시작성">
                         </td>
                     </tfoot>  
                 </table>
+                </td>
             </form>
+        </tr>
+        </table>
         </body>
 </html>
