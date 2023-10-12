@@ -19,19 +19,19 @@ table{
 </style>
 </head>
 <body>
-<%
-	out.println("<div align=\"center\">");
-	out.println("<table>");
-	out.println("<tr>");
-	out.println("<td><font color=\"red\">일</font></td>");
-	out.println("<td>월</td>");
-	out.println("<td>화</td>");
-	out.println("<td>수</td>");
-	out.println("<td>목</td>");
-	out.println("<td>금</td>");
-	out.println("<td><font color=\"blue\">토</font></td>");
-	out.println("</tr>");
-	
+
+	<div align="center">
+	<table>
+	<tr>
+	<td><font color="red">일</font></td>
+	<td>월</td>
+	<td>화</td>
+	<td>수</td>
+	<td>목</td>
+	<td>금</td>
+	<td><font color="blue">토</font></td>
+	</tr>
+<% 
 	for(int i = 0; i < 4; i++){
 		out.println("<tr>");
 		for(int j = 0; j < 7; j++){
@@ -39,9 +39,9 @@ table{
 		}
 		out.println("</tr>");
 	}
-	
-	out.println("</table>");
-	out.println("</div>");
-%>
+%>	
+	</table>
+	</div>
+
 </body>
 </html>

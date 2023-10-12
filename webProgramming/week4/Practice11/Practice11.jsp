@@ -21,11 +21,11 @@
 </style>
 </head>
 <body>
-<%
-	out.println("<h1>구구단 출력</h1>");
-	out.println("<hr><br><br>");
-	out.println("<table>");
-		for(int k = 0; k < 5; k = k + 4){
+	<h1>구구단 출력</h1>
+	<hr><br><br>
+<%	
+out.println("<table>");
+	for(int k = 0; k < 5; k = k + 4){
 		out.println("<tr>");
 		for(int i = k; i < 4 + k; i++){
 			out.println("<td>");
