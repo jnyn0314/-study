@@ -7,8 +7,24 @@
 #define MAX_TREE_SIZE 20
 typedef struct TreeNode {
 	int data;
-	struct TreeNode* left, * right; // 구조체 포인터
+	struct TreeNode* left, * right; 
 }TreeNode;
+TreeNode n1 = { 15, NULL, NULL };
+TreeNode n2 = { 4, &n1, NULL };
+TreeNode n3 = { 16, NULL, NULL };
+TreeNode n4 = { 25, NULL, NULL };
+TreeNode n5 = { 15, &n3, &n4 };
+TreeNode n6 = { 15, &n2, &n5 };
+TreeNode* root = &n6;
+
+TreeNode m1 = { 15, NULL, NULL };
+TreeNode m2 = { 4, &n1, NULL };
+TreeNode m3 = { 16, NULL, NULL };
+TreeNode m7 = { 28, NULL, NULL }; // 추가
+TreeNode m4 = { 25, NULL, &m7 }; // 변경
+TreeNode m5 = { 15, &m3, &m4 };
+TreeNode m6 = { 15, &m2, &m5 };
+TreeNode* root2 = &m6;
 int get_nonleaf_count(TreeNode* node) { // 구조체 포인터
 	int count = 0;
 
@@ -51,7 +67,6 @@ int get_max(TreeNode* node) {
 	int rightMax = get_max(node->right);
 	int rootMax = node->data;
 
-	// 현재 노드의 값과 자식 노드의 최댓값을 비교하여 최댓값을 반환합니다.
 	int maxVal = (leftMax > rightMax) ? leftMax : rightMax;
 	return (rootMax > maxVal) ? rootMax : maxVal;
 }
@@ -66,49 +81,81 @@ int get_min(TreeNode* node) {
 	int minVal = (leftMin < rightMin) ? leftMin : rightMin;
 	return (rootMin < minVal) ? rootMin : minVal;
 }
-void node_increase(TreeNode*) { // 이진 트리의 노드들의 값을 1씩 증가
+void node_increase(TreeNode* node) { // 이진 트리의 노드들의 값을 1씩 증가
 	
+	if (node == NULL)
+		return;
+
+	node->data = node->data + 1; 
+	node_increase(node->left);
+	node_increase(node->right);
+}
+void preorder(TreeNode* node) {
+	if (node != NULL) {
+		printf("[%d] ", node->data);
+		preorder(node->left);
+		preorder(node->right);
+	}
+}
+int equal(TreeNode* node1, TreeNode* node2) {
+	if (node1 == NULL && node2 == NULL) {
+		return TRUE;
+	}
+	if ((node1 != NULL && node2 == NULL) || (node1 == NULL && node2 != NULL))
+		return FALSE;
+	
+	if (node1->data == node2->data) {
+		if (equal(node1->left, node2->left) && equal(node1->right, node2->right))
+			return TRUE;
+	}
+	return FALSE;
+}
+TreeNode* copy(TreeNode* node) {
+	if (node == NULL)
+		return NULL;
+
+	TreeNode* copied = node;
+	copied->data = node->data;
+	copied->left = copy(node->left);
+	copied->right = copy(node->right);
+
+	return copied;
 }
 int main(void) {
 
-	TreeNode n1 = { 15, NULL, NULL };
-	// TreeNode n7 = { 10, NULL, NULL };
-	// TreeNode n2 = { 4, &n1, &n7};
-	TreeNode n2 = { 4, &n1, NULL};
-	TreeNode n3 = { 16, NULL, NULL };
-	TreeNode n4 = { 25, NULL, NULL };
-	TreeNode n5 = { 15, &n3, &n4 };
-	TreeNode n6 = { 15, &n2, &n5 };
-	TreeNode* root = &n6;
-
-	TreeNode m1 = { 15, NULL, NULL };
-	TreeNode m2 = { 4, &n1, NULL };
-	TreeNode m3 = { 16, NULL, NULL };
-	TreeNode m7 = { 28, NULL, NULL }; // 추가
-	TreeNode m4 = { 25, NULL, &m7 }; // 변경
-	TreeNode m5 = { 15, &m3, &m4 };
-	TreeNode m6 = { 15, &m2, &m5 };
-	TreeNode* root2 = &m6;
-
-	printf("get_nonleaf_count(TreeNode *) 테스트:\n");
-	printf("%d ", get_nonleaf_count(root)); // 34
-	printf("%d ", get_nonleaf_count(root2));  // 75 
-
-	printf("\nget_oneleaf_count(TreeNode *) 테스트:\n");
-	printf("%d ", get_oneleaf_count(root)); // 1
-	printf("%d ", get_oneleaf_count(root)); // 2
-
-	printf("\nget_twoleaf_count(TreeNode *) 테스트:\n");
-	printf("%d ", get_twoleaf_count(root)); // 2
-	printf("%d ", get_twoleaf_count(root)); // 2
+	TreeNode* result[MAX_TREE_SIZE];
+	TreeNode* clone;
+	int i, num;
 
 
-	printf("\nint get_max (TreeNode *) 테스트:\n");
-	printf("%d ", get_max(root));
-	printf("%d ", get_max(root2));
+	printf("가)\n");
+	printf("트리 root 중 비단말노드의 개수는 %d.\n", get_nonleaf_count(root));
+	printf("트리 root2 중 비단말노드의 개수는 %d.\n", get_nonleaf_count(root2));
 
-	printf("\nint get_min (TreeNode *) 테스트:\n");
-	printf("%d ", get_min(root));
-	printf("%d ", get_min(root2));
-	return 0;
+	printf("트리 root 중 자식이 하나만 있는 노드의 개수는 %d.\n", get_oneleaf_count(root));
+	printf("트리 root2 중 자식이 하나만 있는 노드의 개수는 %d.\n", get_oneleaf_count(root2));
+	printf("트리 root 중 자식이 둘이 있는 노드의 개수는 %d.\n", get_twoleaf_count(root));
+	printf("트리 root2 중 자식이 둘이 있는 노드의 개수는 %d.\n", get_twoleaf_count(root2));
+	printf("트리 root 에서 가장 큰 수는 %d.\n", get_max(root));
+	printf("트리 root2 에서 가장 큰 수는 %d.\n", get_max(root2));
+	printf("트리 root 에서 가장 작은 수는 %d.\n", get_min(root));
+	printf("트리 root2 에서 가장 작은 수는 %d.\n", get_min(root2));
+
+	printf("\n 다)\n");
+	preorder(root);
+	node_increase(root);
+	printf("\n");
+	preorder(root);
+	printf("\n");
+	
+	printf("%s\n", equal(root, root) ? "같다" : "다르다");
+	printf("%s\n", equal(root2, root2) ? "같다" : "다르다");
+	printf("%s\n", equal(root, root2) ? "같다" : "다르다");
+	
+	printf("\n 라)\n");
+	clone = copy(root);
+	preorder(root);
+	printf("\n");
+	preorder(clone);
+	printf("\n");
 }
