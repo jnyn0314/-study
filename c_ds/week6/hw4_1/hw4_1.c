@@ -114,7 +114,10 @@ TreeNode* copy(TreeNode* node) {
 	if (node == NULL)
 		return NULL;
 
+	// TreeNode* copied = node; 틀린 코드
 	TreeNode* copied = node;
+	copied = (TreeNode*)malloc(sizeof(TreeNode));
+	
 	copied->data = node->data;
 	copied->left = copy(node->left);
 	copied->right = copy(node->right);
