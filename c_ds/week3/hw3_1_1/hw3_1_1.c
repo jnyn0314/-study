@@ -17,36 +17,33 @@ void error(char* message) {
 	fprintf(stderr, "%s\n", message);
 	exit(1);
 }
-void init_queue(QueueType* p) {
-	p->front = -1;
-	p->rear = -1;
+void init_queue(QueueType* q) {
+	q->front = -1;
+	q->rear = -1;
 }
-int is_empty(QueueType* p) {
-	if (p->front == p->rear)
+int is_empty(QueueType* q) {
+	if (q->front == q->rear)
 		return 1;
 	else
 		return 0;
 }
-int is_full(QueueType* p) {
-	if (p->rear == MAX_QUEUE_SIZE - 1)
+int is_full(QueueType* q) {
+	if (q->rear == MAX_QUEUE_SIZE - 1)
 		return 1;
 	else
 		return 0;
 }
-void enqueue(QueueType* p, element item) {
-	/*
-	if (is_full(p)) {
-		error("아직 대상자가 없습니다. 대기자가 꽉찼으니 담 기회를 이용");
-	}
-	*/
-	p->man[++(p->rear)] = item;
+void enqueue(QueueType* q, element item) {
+	if (is_full(q))
+		error("큐가 포화상태입니다.\n");
+	q->rear = (q->rear + 1) % MAX_QUEUE_SIZE;
+	q->man[q->rear] = item;
 }
-element dequeue(QueueType* p) {
-	if (is_empty(p)) {
-		error("큐가 공백상태입니다.");
-	}
-	element item = p->man[++(p->front)];
-	return item;
+element deqeue(QueueType* q) {
+	if (is_empty(q))
+		error("큐가 비었습니다.\n");
+	q->front = (q->front + 1) % MAX_QUEUE_SIZE;
+	return q->man[q->front];
 }
 element peek(QueueType* q)
 {
