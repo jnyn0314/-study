@@ -37,12 +37,22 @@ ListNode* insert_last(ListNode* head, element data) {
 
 	if (head == NULL) {
 		head = p;
+		return head;
 	}
 	else {
 		while (temp->link != NULL)
 			temp = temp->link;
 		temp->link = p;
 	}
+	return head;
+}
+ListNode* delete_next(ListNode* head, ListNode* pre) {
+	ListNode* removed;
+
+	removed = pre->link;
+	pre->link = removed->link;
+	free(removed);
+
 	return head;
 }
 ListNode* delete_first(ListNode* head) {
@@ -59,7 +69,7 @@ ListNode* delete_first(ListNode* head) {
 ListNode* delete_last(ListNode* head) {
 	ListNode* temp = head;
 	ListNode* prevTemp = NULL;
-	ListNode* removed;
+	// ListNode* removed;
 
 	if (head == NULL)
 		error("삭제할 항목이 없음\n");
@@ -77,6 +87,17 @@ ListNode* delete_last(ListNode* head) {
 	}
 	return head;
 }
+ListNode* search(ListNode* head, element x) {
+	ListNode* p;
+	p = head;
+	while (p != NULL) {
+		if (p->number == x)
+			return p;
+		else
+			p = p->link;
+	}
+	return NULL;
+}
 ListNode* reverse(ListNode* head) {
 	ListNode* p, * q, * r;
 	p = head;
@@ -90,7 +111,7 @@ ListNode* reverse(ListNode* head) {
 	}
 	return q;
 }
-ListNode* concat(ListNode* head1, ListNode* head2) {
+ListNode* concat(ListNode* head1, ListNode* head2) { // head1, head2 연결
 	ListNode* p;
 	if (head1 == NULL)
 		return head2;
