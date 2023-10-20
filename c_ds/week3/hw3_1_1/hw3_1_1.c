@@ -56,8 +56,8 @@ element peek(QueueType* q)
 	}
 	else return q->man[(q->front) % MAX_QUEUE_SIZE];
 }
-int get_count(QueueType *p) {
-	return p->rear - p->front;
+int get_count(QueueType* q) {
+	return (q->rear - q->front + MAX_QUEUE_SIZE) % MAX_QUEUE_SIZE;
 }
 void print_queue(QueueType* q) {
 	int start = (q->front + 1) % MAX_QUEUE_SIZE;
