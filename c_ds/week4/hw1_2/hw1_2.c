@@ -154,7 +154,7 @@ int get_total(ListNode* head) {
 		p = p->link;
 	}
 	return total;
-}
+}/*
 element get_entry(ListNode* head, int pos) {
 	ListNode* p = head;
 	int idx = 0;
@@ -169,30 +169,38 @@ element get_entry(ListNode* head, int pos) {
 	}
 	if (head == NULL) 
 		error("확인할 리스트가 없음\n");
+}*/ // 밑에거가 더 간결한거같아서..
+element get_entry(ListNode* head, int pos) {
+	ListNode* p;
+	if (pos < 0 || get_length(head) <= pos)
+		error("pos error");
+	if (head == NULL)
+		error("가져올 리스트가 없음");
+	for (int i = 0; i < pos; i++) {
+		p = p->link;
+		return p->number;
+	}
+	return NULL;
 }
 ListNode* delete_by_key(ListNode* head, int key) {
 	ListNode* temp = head;
 	ListNode* prev = NULL;
-	if (head == NULL)
-		error("삭제할 항목이 없음");
-	
-	if (head->number == key) {
+
+	if (temp != NULL && temp->number == key) {
 		head = head->link;
 		free(temp);
 		return head;
 	}
-	while (temp != NULL && temp->number != key) {
+
+	while (temp != NULL) {
+		if (temp->number == key) {
+			prev->link = temp->link;
+			free(temp);
+			return head;
+		}
 		prev = temp;
 		temp = temp->link;
 	}
-	// 삭제 대상을 찾지 못한 경우
-	if (temp == NULL) {
-		error("삭제할 항목을 찾을 수 없음");
-		return head;
-	}
-	// 삭제 대상을 찾은 경우
-	prev->link = temp->link;
-	free(temp);
 	return head;
 }
 ListNode* insert_pos(ListNode* head, int pos, element value) {
