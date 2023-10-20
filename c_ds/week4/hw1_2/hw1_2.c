@@ -11,6 +11,14 @@ void error(char* message) {
 	fprintf(stderr, "%s\n", message);
 	exit(1);
 }
+ListNode* insert_next(ListNode* head, ListNode* pre, element value) {
+	ListNode* p = (ListNode*)malloc(sizeof(ListNode));
+	p->number = value;
+	p->link = pre->link;
+	pre->link = p;
+
+	return head;
+}
 ListNode* insert_first(ListNode* head, element data) {
 
 	ListNode* list = (ListNode*)malloc(sizeof(ListNode));
