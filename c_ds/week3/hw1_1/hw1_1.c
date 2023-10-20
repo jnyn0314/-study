@@ -1,9 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h> // exit(1)
-
 #define MAX_LIST_SIZE 5
-
 typedef int element;
 typedef struct {
 	element array[MAX_LIST_SIZE];
@@ -74,8 +72,11 @@ element delete(ArrayListType* L, int pos) {
 	return item;
 }
 void clear_list(ArrayListType* L) {
-	
-	L->size = 0; // !!
+	for (int i = 0; i < L->size; i++) {
+		// 데이터 요소를 해제
+		free(L->array[i]);
+	}
+	L->size = 0; 
 }
 int get_length(ArrayListType* L) {
 	int count = 0;
