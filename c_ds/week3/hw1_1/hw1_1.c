@@ -101,15 +101,14 @@ int is_in_list(ArrayListType* L, int item) {
 	}
 	return 0;
 }
-element delete_by_key(ArrayListType *L, int item) {
+void delete_by_key(ArrayListType *L, int item) {
 	for (int i = 0; i < L->size; i++) {
 		if (item == L->array[i]) {
 			delete(L, i);
-			return L;
+			return; // 더 이상 처리가 필요 없으므로 함수를 종료한다.
 		}
 	}
 	printf("삭제하려는 key값 %d는 리스트에 없습니다.\n", item);
-	return 0;
 }
 int main(void) {
 
