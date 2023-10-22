@@ -17,21 +17,21 @@
 		Calendar cal = Calendar.getInstance();
 		cal.set(year, month - 1, 1);
 		
-		int day = cal.get(Calendar.DAY_OF_WEEK); 
-		int start = cal.getMinimum(Calendar.DATE); 
-		int end = cal.getActualMaximum(Calendar.DATE); 
-		
+		int day = cal.get(Calendar.DAY_OF_WEEK);  // 요일
+		int start = cal.getMinimum(Calendar.DATE);  // 1
+		int end = cal.getActualMaximum(Calendar.DATE); // 30 31
+		int date = start; // 1-31
 		int i, j;
 		
 		out.println("<h1> " + year + "년 " + (month) + "월 </h1><hr>");
 		
-		while (start <= end) {
-		    for (i = 0; i < 7; i++) {
-		        if (i < day - 1 || start > end) {
-		            out.println("&nbsp; &nbsp; &nbsp;");
+		while (date <= end) { // 31일 될 때까지
+		    for (i = 0; i < 7; i++) { 
+		        if (i < day - 1 || date > end) { // 
+		            out.println("&nbsp; &nbsp; &nbsp; " + " ");
 		        } else {
-		            out.println("&nbsp;&nbsp;&nbsp;" + start);
-		            start++;
+		            out.println("&nbsp; &nbsp; &nbsp;"+ date);
+		            date++;
 		        }
 		    }
 		    day = 1;
