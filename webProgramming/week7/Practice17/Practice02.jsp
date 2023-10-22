@@ -69,8 +69,8 @@
                         <tr>
                             <td class="title">성별</td>
                             <td>
-                                <input type="radio" name="gen" value="1">남
-                                <input type="radio" name="gen" value="2" checked>여
+                                <input type="radio" name="gen" value="0">남
+                                <input type="radio" name="gen" value="1" checked>여
                             </td>
                         </tr>
                         <tr>
@@ -85,7 +85,9 @@
                             <td>
                                 <select name="phone1">
                                     <option value="0">010</option>
-                                    <option value="1">011</option>    
+                                    <option value="1">011</option>
+                                    <option value="2">017</option>
+                                    <option value="3">070</option>    
                                 </select> -
                                 <input type="text" maxlength="4" size="4" name="phone2"> -
                                 <input type="text" maxlength="4" size="4" name="phone3">

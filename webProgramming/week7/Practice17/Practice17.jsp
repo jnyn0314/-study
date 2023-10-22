@@ -16,37 +16,57 @@
 		Enumeration<String> e = request.getParameterNames();
 		
 		while(e.hasMoreElements()){
-			String name = e.nextElement();
-			String[] value = request.getParameterValues(name);
+			String name = e.nextElement(); // 이름 추출
 			
-			if(value != null){
-				for(String eachValue : value){
-					out.println(name + ": " + eachValue + "<br>");
+			String[] multiple_value = request.getParameterValues(name);
+			String one_value = request.getParameter(name);
+			out.println(name + " :");
+			
+			if(isMultipleChoice(name)){
+				if(multiple_value != null){
+					for(String eachValue : multiple_value)
+					out.println(eachValue + " /");
 				}
+				out.println("<br>");
 			}
+			else{
+				out.println(one_value + "<br>");
+			}
+			
 		}
 	%>
 	<hr>
 	<h1>Processing Parameters</h1>
 	<br>
+	<%
+		ArrayList<String> list_name = getParameterNames(request);
+		
+		if(list_name != null){
+			for(String each_name : list_name){
+				out.println(each_name + ":" + request.getParameter(each_name) + "<br>");
+			}
+		}
+	%>
 	<%!
 		String[] mChoices = {"hobby"};
-		String[] telCompany = {"뉴스", "맛집", "책", "영화", "여행"};
+		String[] hobbyNames = {"뉴스", "맛집", "책", "영화", "여행"};
+		String[] telCompany = {"010", "011", "017", "070"};
 		String[] gNames = {"남", "여"};
-	
-		ArrayList<String> getParameterNames(HttpServletRequest request){
-		Enumeration<String> en = request.getParameterNames();
-		ArrayList<String> list = new ArrayList<>();
 		
-		while(en.hasMoreElements()){
-			String name = en.nextElement();
-			list.add(name);
+		ArrayList<String> getParameterNames(HttpServletRequest request){
+			Enumeration<String> en = request.getParameterNames();
+			ArrayList<String> list = new ArrayList<>();
+			
+			while(en.hasMoreElements()){
+				String names = en.nextElement();
+				list.add(names);
+			}
+			return list;
 		}
-		return list;
-		}
+		
 		boolean isMultipleChoice(String paramName){
 			for(String choice : mChoices){
-				if(paramName.equals(mChoices))
+				if(paramName.equals(choice))
 					return true;
 				}
 			return false;
