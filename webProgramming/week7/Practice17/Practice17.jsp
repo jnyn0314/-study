@@ -32,7 +32,6 @@
 			else{
 				out.println(one_value + "<br>");
 			}
-			
 		}
 	%>
 	<hr>
@@ -43,7 +42,7 @@
 		
 		if(list_name != null){
 			for(String each_name : list_name){
-				out.println(each_name + ":" + request.getParameter(each_name) + "<br>");
+				out.println(each_name + ":" + get_value_name(each_name, request.getParameter(each_name)) + "<br>");
 			}
 		}
 	%>
@@ -63,13 +62,24 @@
 			}
 			return list;
 		}
-		
 		boolean isMultipleChoice(String paramName){
 			for(String choice : mChoices){
 				if(paramName.equals(choice))
 					return true;
 				}
 			return false;
+		}
+		String get_value_name(String name,String index){
+			if(name.equals("hobby")){
+				return hobbyNames[Integer.parseInt(index)];
+			}
+			else if(name.equals("gender")){
+				return gNames[Integer.parseInt(index)];
+			}
+			else if(name.equals("telCompany")){
+				return telCompany[Integer.parseInt(index)];
+			}
+			return index;
 		}
 	%>
 </body>
