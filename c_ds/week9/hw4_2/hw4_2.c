@@ -1,7 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include<stdio.h>
 #include<stdlib.h>
-#include<memory.h>
 #define TRUE 1
 #define FALSE 0
 typedef struct TreeNode {
@@ -19,6 +18,13 @@ void inorder(TreeNode* root) {
 		inorder(root->left);
 		printf("[%d]", root->key);
 		inorder(root->right);
+	}
+}
+void preorder(TreeNode* root) {
+	if (root) {
+		printf("[%d]", root->key);
+		preorder(root->left);
+		preorder(root->right);
 	}
 }
 TreeNode* search(TreeNode* node, int key) {
@@ -135,7 +141,7 @@ int main(void) {
 			while (getchar() != '\n');
 			break;
 		case 'p':
-			inorder(tree); // preorder로 고치기
+			preorder(tree); 
 			break;
 		case 'h':
 			printf("트리의 높이는 %d\n", get_height(tree));
