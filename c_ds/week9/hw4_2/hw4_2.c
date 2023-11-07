@@ -81,10 +81,16 @@ TreeNode* delete_node(TreeNode* root, int key) {
 			return temp;
 		}
 		temp = get_minimum(root->right);
-		
+		/*
 		root->key = temp->key; // 중위 순회시 후계 노드를 복사한다.
-
 		root->right = delete_node(root->right, temp->key); // 중위 순회시 후계 노드를 삭제한다.
+		
+		root->left = delete_node(root->left, temp->key); // 후위 순회시 후계 노드의 왼쪽 서브트리를 삭제합니다.
+		root->right = delete_node(root->right, temp->key); // 후위 순회시 후계 노드의 오른쪽 서브트리를 삭제합니다.
+		*/
+		root->key = temp->key; // 전위 순회시 후계 노드를 복사한다.
+		root->left = delete_node(root->left, temp->key); // 전위 순회시 후계 노드를 왼쪽 서브트리에서 삭제합니다.
+
 	}
 	return root;
 }
@@ -113,7 +119,7 @@ int main(void) {
 
 	printf("Enter i<nsert>, d<elete>, s<earch>, p<rint>, h<eight>, c<ount>, m<ax>, n<in>, q<uit>:");
 	scanf(" %c", &input);
-	while (getchar() != '\n');
+	// while (getchar() != '\n');
 
 	while (input != 'q') {
 		switch (input)
@@ -158,7 +164,6 @@ int main(void) {
 		default:
 			break;
 		}
-		
 		printf("Enter i<nsert>, d<elete>, s<earch>, p<rint>, h<eight>, c<ount>, m<ax>, m<in>, q<uit>:");
 		scanf("%c", &input);
 		while (getchar() != '\n');
