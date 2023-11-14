@@ -9,8 +9,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-	아이디 : <input type="text">
+<form method="get" action="application_02.jsp">
+	아이디 : <input type="text" name="id">
+	<br><br>
 	<input type="submit" value="로그인">
 	<input type="reset" value="취소">
+</form>
 </body>
 </html>
