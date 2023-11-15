@@ -9,92 +9,42 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Calendar</title>
-<style>
-        table {
-            border-collapse: collapse;
-            width: 90%;
-            margin-left: 3%;
-            margin-top: 20px;
-        }
-        .sunday {
-            color: red;
-        }
-        .saturday {
-            color: blue;
-        }
-        .bold {
-            font-weight: bold;
-            margin-left: 80%;
-        }
-</style>
 </head>
 <body>
 	<% 
 	String Syear = request.getParameter("YEAR");
 	String Smonth = request.getParameter("MONTH");
-	int year = 0, month = 0;
+	int year = 2018, month = 7; // 초기화
 	
 	if(Syear != null && Smonth != null){
 		year = Integer.parseInt(Syear);
 		month = Integer.parseInt(Smonth);
 	}
-	%>
-	<%! 
-    public String parseDay(int cnt, String day) {
-        String color = "";
-        if (cnt == 1) {
-            color = "red"; // Sunday
-        } else if (cnt == 7) {
-            color = "blue"; // Saturday
-        }
-        
-        if (!color.isEmpty()) {
-            return "<font color=\"" + color + "\">" + day + "</font>";
-        } else {
-            return day;
-        }
-    }
-	%>
-	<form method="get" action="calendar.jsp">
-		<a href="calendar.jsp?"></a>
-	</form>
-	<%
-	Calendar today = Calendar.getInstance();
-	// int year = today.get(Calendar.YEAR);
-	// int month = today.get(Calendar.MONTH) + 1;
+
 	Calendar cal = Calendar.getInstance();
-	cal.set(year, month -1, 1);
-	int cnt = 0;
-	int date = today.get(Calendar.DATE);
-	%>
-<table border="1">
-	<tr>
-		<td><%= parseDay(1, "일") %></td>
-		<td><%= parseDay(2, "월") %></td>
-		<td><%= parseDay(3, "화") %></td>
-		<td><%= parseDay(4, "수") %></td>
-		<td><%= parseDay(5, "목") %></td>
-		<td><%= parseDay(6, "금") %></td>
-		<td><%= parseDay(7, "토") %></td>
-	</tr>
-	<%
+	cal.set(year, month - 1, 1);
+		
+	int day = cal.get(Calendar.DAY_OF_WEEK);  // 요일
+	int start = cal.getMinimum(Calendar.DATE);  // 1
+	int end = cal.getActualMaximum(Calendar.DATE); // 30 31
+	int date = start; // 1-31
+	int i, j;
+		
+	out.println("<div><h3> " + year + "년 " + (month) + "월 </h3><hr>");
 	
-	for(int i = 0; i < cal.get(Calendar.DAY_OF_WEEK) - 1; i++)
-		out.println("<td>&nbsp;</td>");
-	while(cal.get(Calendar.MONTH) == month - 1){
-		if(cal.get(Calendar.DAY_OF_WEEK) == 1)
-			out.println("<tr>");
-		out.println("<td>" + parseDay(cal.get(Calendar.DAY_OF_WEEK), String.valueOf(cal.get(Calendar.DATE)))+ "</td>");
-		if(cal.get(Calendar.DAY_OF_WEEK) == 7)
-			out.println("</tr>");
-		cal.add(Calendar.DATE, 1);
-	}
-	int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
-	while(dayOfWeek <= 7){
-		out.println("<td>&nbsp;</td>");
-		dayOfWeek++;
+	while (date <= end) { // 31일 될 때까지
+		for (i = 0; i < 7; i++) { 
+		   if (i < day - 1 || date > end) { // 
+		        out.println("&nbsp; &nbsp; &nbsp; " + " ");
+		   } else {
+		       out.println("&nbsp; &nbsp; &nbsp;"+ date);
+		       date++;
+		    }
 		}
-	
+		day = 1;
+		out.println("<br>");
+	}
+	out.println("</div>");
 	%>
 </body>
 </html>

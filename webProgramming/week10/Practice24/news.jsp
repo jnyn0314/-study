@@ -16,7 +16,18 @@
 	
 	if(task1 == null)
 		task1 = "일정 없음";
-	
+	if(task2 == null)
+		task2 = "일정 없음";
 	%>
+	<div>
+	<h3>오늘의 일정</h3>
+	<hr>
+	<%
+	if(task1 != null && task2 != null){
+		out.println("1." + task1);
+		out.println("2." + task2);
+	}
+	%>
+	</div>
 </body>
 </html>

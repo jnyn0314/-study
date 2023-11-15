@@ -7,18 +7,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>include action</title>
-<style>	div{text-align:center};</style>
+<style>
+	table{width:100%; text-align:center};
+	td:nth-child(1){width:700px; padding-left:100px;};
+</style>
 </head>
 <body>
-	<div><h2>Include Action Practice</h2></div>
-	<hr>
-	<div><jsp:include page="calendar.jsp">
+	<div><h2>Include Action Practice</h2></div><hr>
+	<table><tr>
+	<td><jsp:include page="calendar.jsp">
 	<jsp:param name="YEAR" value="2023" />
-	<jsp:param name="MONTH" value="2" />
-	</jsp:include></div>
-	<div><jsp:include page="news.jsp">
-	<jsp:param name="TASK1" value="" />
-	<jsp:param name="TASK2" value="" />
-	</jsp:include></div>
+	<jsp:param name="MONTH" value="10" />
+	</jsp:include></td>
+	<td><jsp:include page="news.jsp">
+	<jsp:param name="TASK1" value="null" />
+	<jsp:param name="TASK2" value="null" />
+	</jsp:include></td>
+	</tr></table>
 </body>
 </html>
