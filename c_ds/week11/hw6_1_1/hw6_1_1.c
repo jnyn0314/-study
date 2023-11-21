@@ -1,7 +1,6 @@
 // 그래프 추상 타입의 구현(인접 행렬 이용)
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-#include <stdlib.h>
 #include "queue.h"
 #define TRUE 1
 #define FALSE 0
@@ -81,9 +80,9 @@ void read_graph(GraphType* g, char* filename) {
 	fscanf(fp, "%d", &numOfVer);
 	g->n = numOfVer;
 
-	while (fscanf(fp, "%d %d", &start, &end) != EOF) {
+	while (fscanf(fp, "%d %d", &start, &end) != EOF) 
 		insert_edge(g, start, end);
-	}
+	
 	fclose(fp);
 }
 void write_graph(GraphType* g, char* filename) {
@@ -98,11 +97,12 @@ void write_graph(GraphType* g, char* filename) {
 			return;
 		}
 	}
-	for (int i = 0; i < g->n; i++) {
+	fprintf(fp, "%d\n", g->n);
+	for (int i = 0; i < g->n; i++)
 		for (int j = 0; j < g->n; j++)
-			fprintf(fp, "%d", g->adj_mat[i][j]);
-		fprintf(fp, "\n");
-	}
+			if (g->adj_mat[i][j] == 1)
+				fprintf(fp, "%d %d\n", i, j);
+	
 	fclose(fp);
 }
 void print_adj_mat(GraphType* g) {
