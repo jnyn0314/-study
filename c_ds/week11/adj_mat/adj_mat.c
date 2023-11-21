@@ -37,28 +37,6 @@ void print_adj_mat(GraphType* g) {
 		printf("\n");
 	}
 }
-int outDegree(GraphType* g, int vertex) {
-	int degree = 0;
-	for (int i = 0; i < g->n; i++) {
-		degree += g->adj_mat[vertex][i];
-	}
-	return degree;
-}
-int inDegree(GraphType* g, int vertex) {
-	int degree = 0;
-	for (int i = 0; i < g->n; i++) {
-		degree += g->adj_mat[i][vertex];
-	}
-	return degree;
-}
-int countDegree(GraphType* g) {
-	int degree = 0;
-	for (int i = 0; i < g->n; i++) {
-		for (int j = 0; j < g->n; j++)
-		degree += g->adj_mat[i][j];
-	}
-	return degree;
-}
 int main(void) {
 	GraphType* g;
 	g = (GraphType*)malloc(sizeof(GraphType));
