@@ -99,7 +99,7 @@ void write_graph(GraphType* g, char* filename) {
 	}
 	fprintf(fp, "%d\n", g->n);
 	for (int i = 0; i < g->n; i++)
-		for (int j = 0; j < g->n; j++)
+		for (int j = i; j < g->n; j++) // 대칭이니까 반만 출력하도록
 			if (g->adj_mat[i][j] == 1)
 				fprintf(fp, "%d %d\n", i, j);
 	
