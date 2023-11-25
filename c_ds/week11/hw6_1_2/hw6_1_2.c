@@ -38,6 +38,7 @@ void insert_edge(GraphType* g, int u, int v) {
     node->link = g->adj_list[u];
     g->adj_list[u] = node;
 }
+/*
 GraphType* delete_edge(GraphType* g, int u, int v) {
     if (u >= g->n || v >= g->n) {
         fprintf(stderr, "그래프 : 정점 번호 오류");
@@ -59,6 +60,31 @@ GraphType* delete_edge(GraphType* g, int u, int v) {
         free(current);
     }
     return g;
+}
+*/
+void remove_node(GraphNode** phead, element item) { // 4장 리스트에서 학습한 함수에서 ListNode --> GraphNode로 변경했음
+    GraphNode* p, * prevp;
+
+    if (*phead == NULL)
+        printf("리스트는 비어있습니다.\n");
+    else if ((*phead)->vertex == item) {
+        p = *phead;
+        *phead = (*phead)->link;
+        free(p);
+    }
+    else {
+        p = *phead;
+        do {
+            prevp = p;
+            p = p->link;
+        } while (p != NULL && p->vertex != item);
+        if (p != NULL) {
+            prevp->link = p->link;
+            free(p);
+        }
+        else
+            printf("%d은 리스트에 없음\n", item);
+    }
 }
 void print_adj_list(GraphType* g) {
     for (int i = 0; i < g->n; i++) {
@@ -98,14 +124,13 @@ void write_graph(GraphType* g, char* filename) {
             return;
         }
     }
+    fprintf(fp, "%d\n", g->n);
     for (int i = 0; i < g->n; i++) {
         GraphNode* p = g->adj_list[i];
-        fprintf(fp, "%d : ", i);
         while (p != NULL) {
-            fprintf(fp, "%d ->", p->vertex);
+            fprintf(fp, "%d %d\n", i, p->vertex);
             p = p->link;
         }
-        fprintf(fp, "\n");
     }
     fclose(fp);
 }
