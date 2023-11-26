@@ -12,6 +12,9 @@ typedef struct {
 	element heap[MAX_ELEMENT];
 	int heap_size;
 }HeapType;
+HeapType* create() {
+	return (HeapType*)malloc(sizeof(HeapType));
+}
 void init(HeapType* h) {
 	h->heap_size = 0;
 }
@@ -77,45 +80,95 @@ int find(HeapType* h, int root, int key) {
 	return 0;
 }
 void print_sorted_value(HeapType* h) {
-	HeapType newH;
-	init(&newH); 
+	int i;
+	HeapType* temp_heap = create();
+	init(temp_heap);
 
-	for (int i = 1; i <= h->heap_size; i++) {
-		insert_max_heap(&newH, h->heap[i]); 
+	for (i = 1; i <= h->heap_size; i++) {
+		insert_max_heap(temp_heap, h->heap[i]);
 	}
 
-	while (newH.heap_size > 0) {
-		element max_element = delete_max_heap(&newH); 
-		printf("%d ", max_element.key);
+	for (i = 1; i <= temp_heap->heap_size; i++) {
+		printf("%d ", temp_heap->heap[i].key);
 	}
 	printf("\n");
-}
 
-int main(void) {
+	free(temp_heap);
+}
+void heap_sort(element a[], int n) {
+	int i;
+	HeapType* h;
+	h = create();
+	init(h);
+	for (i = 0; i < n; i++) {
+		insert_max_heap(h, a[i]);
+	}
+	for (i = 0; i < n; i++ ) {
+		a[i] = delete_max_heap(h);
+	}
+	free(h);
+}
+void modify_priority(HeapType* h, int key1, int key2) {
+	element a[MAX_ELEMENT];
+	int i = 0;
+	while (find(h, 1, key1)) {
+		a[i++] = delete_max_heap(h);
+	}
+	insert_max_heap(h, (element) { key2 });
+	for (int j = 0; j < i; j++) {
+		insert_max_heap(h, a[j]);
+	}
+}
+int main(void)
+{
 	element e1 = { 10 }, e2 = { 5 }, e3 = { 30 }, eA = { 9 }, eB = { 19 }, eC = { 39 };
-	element e4;
-	HeapType heap;
-	init(&heap);
+	element e4, e5, e6;
+	int index;
+	int key, oldKey, newKey;
+	HeapType heap; // 히프 생성 
+	init(&heap); // 초기화 
+
+	printf("Step1: 삽입된 10, 5, 30 에 추가적으로 9, 19, 39 를 <삽입> 한다");
 	insert_max_heap(&heap, e1);
 	insert_max_heap(&heap, e2);
 	insert_max_heap(&heap, e3);
 	insert_max_heap(&heap, eA);
 	insert_max_heap(&heap, eB);
 	insert_max_heap(&heap, eC);
-	preorder(&heap, 1); // 39 15 5 9 30 10 
-	printf("\n");
-	
-	print_heap(&heap); // 39 \n 19 30 \n 5 9 10
 
-	int index = find(&heap, 1, 9);
-	printf("\n%d\n", index); // 5
-
-	print_sorted_value(&heap); // 39 30 19 10 9 5
-	e4 = delete_max_heap(&heap); 
-	printf("\n<%d>\n", e4.key); // 39
-	print_heap(&heap); // 30 19 10 9 5
+	printf("\nStep2: preorder, print_heap 함수 테스트\n");
+	preorder(&heap, 1);
+	printf("\n\n");
+	print_heap(&heap);
 
 	e4 = delete_max_heap(&heap);
-	printf("\n<%d>\n", e4.key);
+	printf("\n 삭제: 루트가 삭제됨\n", e4.key);
 	print_heap(&heap);
+
+	printf("\nStep3: find 함수 테스트\n");
+	printf("찾을 key 입력(-1 for exit):");
+	scanf("%d", &key);
+	while (key != -1) {
+		if ((index = find(&heap, 1, key)) == 0)
+			printf("%d 는 없음\n", key);
+		else
+			printf("%d 은 [%d]에 있음\n", key, index);
+		printf("찾을 key 입력(-1 for exit):");
+		scanf("%d", &key);
+	}
+
+	printf("\nStep4: print_sorted_value 함수 테스트\n");
+	print_sorted_value(&heap);
+
+	printf("\nStep5: modify_priority 함수 테스트\n");
+	printf("바꿀 key 입력(-1 for exit):");
+	scanf("%d", &oldKey);
+	while (oldKey != -1) {
+		printf("새 key 입력:");
+		scanf("%d", &newKey);
+		modify_priority(&heap, oldKey, newKey);
+		print_heap(&heap);
+		printf("바꿀 key 입력(-1 for exit):");
+		scanf("%d", &oldKey);
+	}
 }
