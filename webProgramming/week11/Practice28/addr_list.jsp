@@ -8,18 +8,22 @@
 <head>
 <meta charset="UTF-8">
 <title>addr_list.jsp</title>
+<style>body{text-align:center};</style>
 </head>
 <body>
 	<h2>주소록</h2><hr>
 	<%
+	int i = 0;
     ArrayList<String> addr = (ArrayList<String>)application.getAttribute("addrbook");
     if (addr != null) {
-        for (String entry : addr) {
-            out.println("<li>");
-            out.println("<ol>" + entry + "</ol>");
-            out.println("<li>");
+    	 out.println("<ol>");
+    	for (String entry : addr){
+            out.println("<li>" + entry + "</li>");
         }
+    	out.println("</ol>");
     }
-%>
+	%>
+	<hr>
+	<a href="addr_form.jsp">주소추가</a>
 </body>
 </html>

@@ -31,12 +31,13 @@ body{text-align:center};
 		}
 	} // request 내장 객체로 전달된 입력값 출력한다.
 	// 입력한 값을 하나의 문자열로 변환하는데 이때 application 내장객체 쓸 것
-	ArrayList<String> list = new ArrayList<String>();
+	ArrayList<String> list = (ArrayList<String>)application.getAttribute("addrbook"); 
 	if(list == null){ // 값이 없다면
-		list = (ArrayList<String>)application.getAttribute("addrbook"); 
+		list = new ArrayList<String>();
 	}
 	list.add(addrbook);
 	application.setAttribute("addrbook", list);
+	
 %>
 <hr><br>
 <a href="addr_list.jsp">목록보기</a>
