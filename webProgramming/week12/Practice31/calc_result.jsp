@@ -51,7 +51,11 @@
 </head>
 <body>
     <jsp:useBean id="calc" class="jspbook.pr31.Calculator" scope="page"/>
-    <jsp:setProperty name="calc" property="*"/><br> 
+    <%
+    	calc.setOp1(Integer.parseInt(request.getParameter("op1")));
+    	calc.setOperation(request.getParameter("operation"));
+    	calc.setOp2(Integer.parseInt(request.getParameter("op2")));
+    %>
     <table border="1">
         <tr>
             <td colspan="2" class="border"><h1>CalCuLaTor</h1></td>
@@ -70,15 +74,13 @@
             	=
             	<br><br>
             	<div style="border:1px solid; width:50%; margin:auto;" readonly text-align="center">
-            	<%  result = calc.calc(calc.getOp1(), calc.getOp2(), calc.getOperation()); 
-            		out.println(result);
-            	%>
+            	<%= calc.calc() %>
+            	</div>
              </td>
         </tr>
         <tr>
             <td colspan="2" class="border"></td>
         </tr>
     </table>
-    
 </body>
 </html>
