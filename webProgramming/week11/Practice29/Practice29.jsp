@@ -8,8 +8,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>시간표 작성</title>
 <style>p{text-align:center};</style>
+<title>시간표 작성</title>
+</head>
 <body>
 	<form action="Practice29.jsp">
 	<% 
@@ -69,12 +70,14 @@
 	
 	for (String timetable2 : list) {
 		String[] student = timetable2.split("/");
+		if (student.length >= 5) {
 		String rlst1 = typeNames[Integer.parseInt(student[0])];
 		String rlst2 = titleNames[Integer.parseInt(student[1])];
 		String rlst3 = days[Integer.parseInt(student[2])];
 		int rlst4 = Integer.parseInt(student[3]);
 		int rlst5 = Integer.parseInt(student[4]);
 		out.println("<p>" + rlst1 + "/" + rlst2 + "/" + rlst3 + "/" + rlst4 + "/" + rlst5 + "<br></p>");
+		}
 	}
 	%>
 </body>
