@@ -12,40 +12,55 @@
 <title>Practice17</title>
 </head>
 <body>
-	<%
-		Enumeration<String> e = request.getParameterNames();
-		
-		while(e.hasMoreElements()){
-			String name = e.nextElement(); // 이름 추출
-			
-			String[] multiple_value = request.getParameterValues(name);
-			String one_value = request.getParameter(name);
-			out.println(name + " :");
-			
-			if(isMultipleChoice(name)){
-				if(multiple_value != null){
-					for(String eachValue : multiple_value)
-					out.println(eachValue + " /");
-				}
-				out.println("<br>");
-			}
-			else{
-				out.println(one_value + "<br>");
-			}
-		}
-	%>
-	<hr>
-	<h1>Processing Parameters</h1>
-	<br>
-	<%
-		ArrayList<String> list_name = getParameterNames(request);
-		
-		if(list_name != null){
-			for(String each_name : list_name){
-				out.println(each_name + ":" + get_value_name(each_name, request.getParameter(each_name)) + "<br>");
-			}
-		}
-	%>
+<h1>Processing Parameters</h1>
+    <%
+        Enumeration<String> e = request.getParameterNames();
+
+        while(e.hasMoreElements()){
+            String name = e.nextElement(); // 이름 추출
+
+            String[] multiple_value = request.getParameterValues(name);
+            String one_value = request.getParameter(name);
+            out.println(name + " :");
+
+            if(isMultipleChoice(name)){
+                if(multiple_value != null){
+                    for(String eachValue : multiple_value)
+                        out.println(eachValue + " / ");
+                }
+                out.println("<br>");
+            }
+            else{
+                out.println(one_value + "<br>");
+            }
+        }
+    %>
+    <hr>
+    <h1>Processing Parameters</h1>
+    <br>
+    <%
+        ArrayList<String> list_name = getParameterNames(request);
+
+        if(list_name != null){
+            for(String each_name : list_name){
+                if (each_name.equals("hobby")) {
+                    String[] hobbyValues = request.getParameterValues(each_name);
+                    if (hobbyValues != null) {
+                        out.print(each_name + ":");
+                        for (int i = 0; i < hobbyValues.length; i++) {
+                            out.print(hobbyNames[Integer.parseInt(hobbyValues[i])]);
+                            if(i < hobbyValues.length - 1){
+                                out.print(" / ");
+                            }
+                        }
+                        out.println("<br>");
+                    }
+                } else {
+                    out.println(each_name + ":" + get_value_name(each_name, request.getParameter(each_name)) + "<br>");
+                }
+            }
+        }
+    %>
 	<%!
 		String[] mChoices = {"hobby"};
 		String[] hobbyNames = {"뉴스", "맛집", "책", "영화", "여행"};
