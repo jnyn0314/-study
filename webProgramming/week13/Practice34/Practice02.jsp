@@ -106,11 +106,11 @@
                         <tr>
                             <td class="title">관심분야</td>
                             <td>
-                                <input type="checkbox" name="hobby" value="0">뉴스
-                                <input type="checkbox" name="hobby" value="1" checked>맛집
-                                <input type="checkbox" name="hobby" value="2">책
-                                <input type="checkbox" name="hobby" value="3">영화
-                                <input type="checkbox" name="hobby" value="4">여행
+                                <input type="checkbox" name="hobby" value="뉴스">뉴스
+                                <input type="checkbox" name="hobby" value="맛집" checked>맛집
+                                <input type="checkbox" name="hobby" value="책">책
+                                <input type="checkbox" name="hobby" value="영화">영화
+                                <input type="checkbox" name="hobby" value="여행">여행
                             </td>
                         </tr>
                         <tr>
