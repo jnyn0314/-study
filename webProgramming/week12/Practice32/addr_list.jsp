@@ -39,14 +39,16 @@
             ArrayList<AddrBean> addrList = manager.addrList;
             if (addrList != null) { // null이 아니면
             	out.println("<tr>");
-                for(AddrBean entry : addrList) {                 	
+                for(AddrBean entry : addrList) {    
+                	// request이용해서, entry 다시 만들고, 
         %>       
-        
+        <!--  
         <td><%= entry.getUserName() %></td>
         <td><%= entry.getTel() %></td>
         <td><%= entry.getEmail() %></td>
         <td><%= entry.getGender() %></td>
         <td><%= entry.getGroup() %></td>
+        -->
 		     <!--  
             <td><jsp:getProperty name="address" property="userName"/></td>
             <td><jsp:getProperty name="address" property="tel"/></td>
