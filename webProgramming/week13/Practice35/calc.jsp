@@ -60,10 +60,10 @@
             	<input type="text" name="op1" value="0" style="text-align:center">
             	<br><br>
             	<select name="operation">
-            		<option value="plus">+</option>
-            		<option value="minus">-</option>
-            		<option value="multiple">*</option>
-            		<option value="division">/</option>
+            		<option value="+">+</option>
+            		<option value="-">-</option>
+            		<option value="*">*</option>
+            		<option value="/">/</option>
             	</select>
             	<br><br>
             	<input type="text" name="op2" value="0" style="text-align:center">

@@ -3,6 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <% request.setCharacterEncoding("UTF-8"); %>
+<%@ page import="java.util.Map" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,13 +52,8 @@
 </head>
 <body>
     <jsp:useBean id="calc" class="jspbook.pr31.Calculator" scope="page"/>
-    ${pageScope.}
-    
-    <%
-    	calc.setOp1(Integer.parseInt(request.getParameter("op1")));
-    	calc.setOperation(request.getParameter("operation"));
-    	calc.setOp2(Integer.parseInt(request.getParameter("op2")));
-    %>
+    <jsp:setProperty name="calc" property="*"/>
+   
     <table border="1">
         <tr>
             <td colspan="2" class="border"><h1>CalCuLaTor</h1></td>
@@ -66,17 +62,24 @@
             <td><input type="image" src="image/cal.jpg" id="img_cal"></td>
             <td style="text-align:center">
             	<div style="border:1px solid; width:50%; margin:auto;" readonly text-align="center">
-            	<jsp:getProperty name="calc" property="op1"/></div>
+            		${param.op1}
+            	</div>
             	<br><br>
-            	<jsp:getProperty name="calc" property="operation"/>
+            		${param.operation}
             	<br><br>
          		<div style="border:1px solid; width:50%; margin:auto;" readonly text-align="center">
-         		<jsp:getProperty name="calc" property="op2"/></div>
+         			${param.op2}
+         		</div>
             	<br><br>
             	=
             	<br><br>
             	<div style="border:1px solid; width:50%; margin:auto;" readonly text-align="center">
             	<%= calc.calc() %>
+            	<% 
+            		int calculation_result = calc.calc(); 
+            		request.setAttribute("result", calculation_result);
+            	%>
+            	${param.result} // 여기 수정 필요
             	</div>
              </td>
         </tr>
