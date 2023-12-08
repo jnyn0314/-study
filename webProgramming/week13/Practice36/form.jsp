@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<jsp:useBean id="lb" class="jspbook.pr36.LectureBean" scope="page"/>
+<jsp:useBean id="manager" class="jspbook.pr36.LectureManager" scope="page"/>
 <%@ page import="jspbook.pr36.LectureBean" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
@@ -7,13 +9,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Practice36</title>
+<title>Form</title>
 </head>
 <body>
 	
-	<jsp:useBean id="lb" class="jspbook.pr36.LectureBean" scope="page"/>
-	<jsp:useBean id="manager" class="jspbook.pr36.LectureManager" scope="application"/>
-	<form action="Practice36.jsp">
+	<form action="ProcessForm.jsp">
 	<jsp:setProperty name="lb" property="*"/>
 	<jsp:setProperty name="manager" property="*"/>
 	
@@ -61,38 +61,5 @@
     </select>
     <input type="submit" value="등록">
 	</form>
-	<hr>
-
-	<% 
-	
-    if (request.getParameter("lectureType") != null) { 
-        int type = Integer.parseInt(request.getParameter("lectureType"));
-        int title = Integer.parseInt(request.getParameter("titleNames"));
-        int day = Integer.parseInt(request.getParameter("dayNames"));
-        int time = Integer.parseInt(request.getParameter("time"));
-        int consecutive = Integer.parseInt(request.getParameter("consecutive"));
-        
-        LectureBean newLecture = new LectureBean();
-        newLecture.setType(type);
-        newLecture.setTitle(title);
-        newLecture.setDay(day);
-        newLecture.setTime(time);
-        newLecture.setConsecutive(consecutive);
-        
-        manager.add(newLecture);
-    }
-    
-    List<LectureBean> lectureList = manager.getLectureList();
-    
-    if (lectureList != null) {
-        for(LectureBean lectureEntry : lectureList) { 
-%>
-        <p><%= lectureEntry.toString() %></p>
-<%
-        }
-    }
-%>
-
 </body>
 </html>
-
