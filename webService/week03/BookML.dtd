@@ -1,0 +1,41 @@
+<!ENTITY % dateAttribute "year CDATA #REQUIRED
+					month (01|02|03|04|05|06|07|08|09|10|11|12) #REQUIRED
+					day CDATA #REQUIRED">
+
+<!ELEMENT catalog (bookList, bookCategory)>
+<!ELEMENT bookList (book*)>
+
+<!ELEMENT book (title, author+, publisher, publishDate, revisionDate*, price, pages+, rating+, categories+, coverArt?, bookIntroduction?, review?)>
+<!ATTLIST book id ID #REQUIRED
+			cagtegories IDREFS #REQUIRED
+			>
+<!ELEMENT title (#PCDATA)>
+<!ELEMENT author (#PCDATA)>
+<!ELEMENT publisher (#PCDATA)>
+
+<!ELEMENT publishDate (#PCDATA)>
+<!ATTLIST publishDate %dateAttribute;> 
+
+<!ELEMENT revisionDate (#PCDATA)>
+<!ATTLIST revisionDate %dateAttribute;>
+<!-- 중복, 반복되는 부분을 entity로 정의해야 돼, parameter entity(dtd의 일부에 해당하는데 중복되는 부분 -->
+					
+<!ELEMENT price (listPrice, salesPrice)>					
+<!ATTLIST price currency (won | dollar | yen) won> <!-- 열거형으로 -->
+<!ELEMENT listPrice (#PCDATA)>
+<!ELEMENT salesPrice (#PCDATA)>
+<!ATTLIST salesPrice discountRate CDATA #REQUIRED> <!-- 0이상 90 이하 가지려면? -->
+
+<!ELEMENT pages (#PCDATA)>
+<!ELEMENT rating (#PCDATA)>
+
+<!ELEMENT categories (#PCDATA)> <!-- ?? 이거 element 말고 속성으로 바꾸기-->
+
+<!ELEMENT coverArt (#PCDATA)>
+<!ELEMENT bookIntroduction (#PCDATA)>
+<!ELEMENT review (#PCDATA)>
+
+<!ELEMENT bookCategory (category*)>
+<!ELEMENT category EMPTY>
+<!ATTLIST category cid ID #REQUIRED>
+<!ATTLIST category name IDREFS #REQUIRED>
