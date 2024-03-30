@@ -4,23 +4,25 @@
 <!ENTITY % commonBookInfo_1 "title, author+, publisher, publishDate">
 <!ENTITY % commonBookInfo_2 "price, pages+, rating+, coverArt?, bookIntroduction?, review?">
 <!ENTITY % bookAttribute "id ID #REQUIRED
-					 categories IDREFS #REQUIRED">
+					 categories CDATA #REQUIRED">
+<!ENTITY % ebookAttribute "format, size, period?"> <!-- (나)#2 기타 요구사항_내부 parameter entity 사용 -->
+<!ENTITY publish "김영사"> <!-- (나)#2 기타 요구사항_내부 일반 parsed entity 사용-->
 
 <!NOTATION gif PUBLIC "image/gif" "imageViewer.exe">
 <!NOTATION jpeg PUBLIC "image/jpeg" "imageViewer.exe">
 
 <!ELEMENT catalog (bookList, bookCategory)>
-<!ELEMENT bookList (book*)>
+<!ELEMENT bookList (book*, ebook, newEbook)>
 
-<!ELEMENT book (%commonBookInfo_1;, revisionDate*, %commonBookInfo_2;)> <!-- #1, #2 -->
-<!ATTLIST book %bookAttribute;> <!-- #3, #7 -->
+<!ELEMENT book (%commonBookInfo_1;, revisionDate*, %commonBookInfo_2;)> <!-- #1, #2 도서와 각 속성 정의-->
+<!ATTLIST book %bookAttribute;> <!-- #3, #7 도서의 속성 정의하는데, entity로 묶음 -->
 			
-<!ELEMENT ebook (%commonBookInfo_1;, revisionDate*, %commonBookInfo_2;, format, size, period?)> <!-- #9 -->
+<!ELEMENT ebook (%commonBookInfo_1;, revisionDate*, %commonBookInfo_2;, %ebookAttribute;)> <!-- #9 -->
 <!ATTLIST ebook %bookAttribute;>		
 
-<!ELEMENT newEbook (%commonBookInfo_1;, %commonBookInfo_2;)> <!-- #11 -->
+<!ELEMENT newEbook (%commonBookInfo_1;, %commonBookInfo_2;, %ebookAttribute;)> <!-- #11 -->
 <!-- newEbook에서 중간 revisionDate값을 빼야 하니까 그 앞까지 하나로 묶고, 그 뒤까지 하나로 묶어서 entity로 가져오는 게 낫다 -->
-<!ATTLIST ebook %bookAttribute;>	
+<!ATTLIST newEbook %bookAttribute;>	
 
 <!-- #10 -->
 <!ELEMENT format (#PCDATA)>
@@ -48,7 +50,7 @@
 <!ELEMENT pages (#PCDATA)>
 <!ELEMENT rating (#PCDATA)>
 
-<!ELEMENT coverArt (#PCDATA)> <!-- #8 -->
+<!ELEMENT coverArt (#PCDATA)> <!-- #8 도서의 표지그림, 속성 -->
 <!ATTLIST coverArt src CDATA #REQUIRED
 						type NOTATION (gif | jpeg) "gif"> 
 
@@ -57,7 +59,7 @@
 
 <!ELEMENT bookCategory (category*)>
 <!--  <!ELEMENT category EMPTY> #7 -->
-<!ELEMENT category (category*)> <!-- #12 -->
-<!ATTLIST category cid ID #REQUIRED>
-<!ATTLIST category name IDREFS #REQUIRED>
+<!ELEMENT category (category*)> <!-- #12 category가 category 자신을 다시 속성으로 가지게 정의 -->
+<!ATTLIST category cid CDATA #REQUIRED>
+<!ATTLIST category name CDATA #REQUIRED>
 
