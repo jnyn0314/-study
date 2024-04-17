@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+        targetNamespace="http://www.example.org/myBookML" 
+        xmlns:tns="http://www.example.org/myBookML" 
+        elementFormDefault="qualified">
+
+    <complexType name="bookType">
+        <sequence>
+        	<element name="title" type="string"></element>
+        	<element name="originalTitle" type="string"></element>
+        	<element name="author" type="string"></element>
+            <element name="translator" type="string"></element>
+            <element name="publisher" type="string"></element>
+        	<element ref="tns:publishDate"></element>
+        	<element ref="tns:revisionDate" maxOccurs="unbounded"
+        		minOccurs="0" />
+        	<element name="price" type="tns:priceType"></element>
+        	<element name="pages" type="int"></element>
+        	<element name="rating" type="double"></element>
+        	<element name="category" type="tns:categoryType"
+        		maxOccurs="unbounded" minOccurs="1">
+        	</element>
+        	<element name="coverImage" type="tns:cover"></element>
+        	<element name="description" type="string"></element>
+        	<element name="review" type="string" maxOccurs="unbounded"
+        		minOccurs="0">
+        	</element>
+        </sequence>
+        <attribute name="isbn" type="tns:ISBNType"></attribute>
+    </complexType>
+
+    <complexType name="priceType">
+        <sequence>
+            <element name="listPrice" type="string"></element>
+            <element name="salesPrice" type="tns:salesPrice"></element>
+        </sequence>
+        <attribute name="currency" type="tns:currencyType"></attribute>
+    </complexType>
+
+	<!-- NOTATION 선언 -->
+    <notation name="gif" public="image/gif"></notation>
+    <notation name="jpeg" public="image/jpeg"></notation>
+    <notation name="png" public="image/png"></notation>
+    
+    <simpleType name="coverImageType">
+        <restriction base="NOTATION">
+            <enumeration value="tns:gif"/>
+            <enumeration value="tns:jpeg"/>
+            <enumeration value="tns:png"/> <!-- 표지그림을 위한 NOTATION -->
+        </restriction>
+    </simpleType>
+    
+    <complexType name="cover">
+    	<attribute name="src" type="anyURI"></attribute>
+    	<attribute name="type" type="tns:coverImageType"></attribute>
+    </complexType>
+    
+    <complexType name="formatType">
+    	<attribute name="value"></attribute>
+    </complexType>
+
+    <complexType name="sizeType">
+    	<simpleContent>
+    		<extension base="double">
+    			<attribute name="unit">
+    				<simpleType>
+    					<restriction base="string">
+    						<enumeration value="MB"></enumeration>
+    						<enumeration value="KB"></enumeration>
+    					</restriction>
+    				</simpleType>
+    			</attribute>
+    		</extension>
+    	</simpleContent>
+    </complexType>
+
+
+    <simpleType name="ISBNType">
+        <restriction base="string">
+            <pattern value="\d{9}-\d{1}|\d{3}-\d{9}-\d{1}"></pattern>
+        </restriction>
+    </simpleType>
+
+    <simpleType name="currencyType">
+        <restriction base="string">
+            <!-- <restriction base="string" default="원"> 이거 왜 오류? 어떻게 고쳐야도ㅐ-->
+            <enumeration value='won'></enumeration>
+            <enumeration value='dollar'></enumeration>
+            <enumeration value='yen'></enumeration>
+        </restriction>
+    </simpleType>
+
+    <simpleType name="pagesType">
+        <restriction base="string">
+            <minLength value="1"></minLength>
+            <maxLength value="1000"></maxLength>
+        </restriction>
+    </simpleType>
+
+    <simpleType name="ratingType">
+        <restriction base="string">
+            <minLength value="1"></minLength>
+            <maxLength value="10"></maxLength>
+        </restriction>
+    </simpleType>
+
+    <attributeGroup name="DateAttributeGroup">
+        <attribute name="year" use="required">
+            <simpleType>
+                <restriction base="string">
+                    <pattern value="19\d{2}|20(0|1)\d|202[0-4]"></pattern>
+                </restriction>
+            </simpleType>
+        </attribute>
+        <attribute name="month">
+            <simpleType>
+                <restriction base="int">
+                    <minInclusive value="1"></minInclusive>
+                    <maxInclusive value="12"></maxInclusive>
+                </restriction>
+            </simpleType>
+        </attribute>
+        <attribute name="day">
+            <simpleType>
+                <restriction base="int">
+                    <minInclusive value="1"></minInclusive>
+                    <maxInclusive value="31"></maxInclusive>
+                </restriction>
+            </simpleType>
+        </attribute>
+    </attributeGroup>
+
+    <element name="catalog">
+        <complexType>
+            <sequence>
+                <element ref="tns:bookList"></element>
+                <element ref="tns:bookCategory"></element>
+            </sequence>
+        </complexType>
+    </element>
+
+    <element name="publishDate">
+        <complexType>
+            <attributeGroup ref="tns:DateAttributeGroup"></attributeGroup>
+        </complexType>
+    </element>
+    
+    <element name="revisionDate">
+    	<complexType>
+    		<attributeGroup ref="tns:DateAttributeGroup"></attributeGroup>
+    	</complexType>
+    </element>
+
+    <element name="bookCategory">
+    	<complexType>
+    		<sequence>
+    			<element name="category" minOccurs="0" maxOccurs="unbounded"/>
+    		</sequence>
+    	</complexType>
+    </element>
+
+    <element name="bookList">
+        <complexType>
+            <sequence>
+                <element name="book" type="tns:bookType" minOccurs="0" maxOccurs="unbounded"></element>
+            </sequence>
+        </complexType>
+    </element>
+
+    <complexType name="eBookType">
+        <complexContent>
+            <extension base="tns:bookType">
+                <sequence>
+                	<element name="format" type="tns:formatType"></element>
+                	<element name="size" type="tns:sizeType"></element>
+                	<element name="period" type="positiveInteger"></element>
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+
+    <complexType name="newEBookType">
+    <complexContent>
+        <extension base="tns:eBookType">
+            <sequence>
+            	<element ref="tns:revisionDate" minOccurs="0"
+            		maxOccurs="0" />
+            	<element name="period" type="positiveInteger" maxOccurs="14" minOccurs="0"/>
+            </sequence>
+        </extension>
+    </complexContent>
+</complexType>
+    
+
+    <complexType name="categoryType">
+    	<simpleContent>
+    		<extension base="anySimpleType">
+    			<attribute name="name" type="string"></attribute>
+    			<attribute name="cid">
+    				<simpleType>
+    					<restriction base="string">
+    						<pattern value="c\d{3}-\d(-\d)?(-\d)?" />
+    					</restriction>
+    				</simpleType>
+    			</attribute>
+    		</extension>
+    	</simpleContent>
+    </complexType>
+
+    <complexType name="salesPrice">
+    	<simpleContent>
+    		<extension base="integer">
+    			<attribute name="discountRate" type="int"></attribute>
+    		</extension>
+    	</simpleContent>
+    </complexType>
+
+</schema>
