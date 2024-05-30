@@ -1,11 +1,17 @@
 <%@ page contentType="text/plain; charset=utf-8" %>
 <%@ page import="example.ajax.pizza.*"%>
 <%@ page import="java.util.*"%> 
-<%-- <%! @SuppressWarnings("unchecked") %>  --%>
+<%! @SuppressWarnings("unchecked") %> 
+<%@ page import="com.fasterxml.jackson.databind.*"%>
 <%
+ObjectMapper mapper = new ObjectMapper();
+
+// convert json -> pojo
+String json = request.getParameter("address");
+Address address = mapper.readValue(json, Address.class);
+
 String phone = request.getParameter("phone");
 String order = request.getParameter("order");
-String address = request.getParameter("address");
 System.out.println("phone: " + phone);
 System.out.println("order: " + order);
 System.out.println("address: " + address);
@@ -30,7 +36,7 @@ if (order.length() <= 0) {
   	response.addHeader("Status", "No order was received");
   	out.print(" ");
 }
-else if (address.length() <= 0) {
+else if (address == null) {
 	response.setStatus(400);		// bad request
   	response.addHeader("Status", "No address was received");
 	out.print(" ");

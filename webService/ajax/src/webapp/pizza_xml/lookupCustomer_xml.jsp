@@ -2,7 +2,7 @@
 <%@ page import="example.ajax.pizza.*,java.util.*" %>
 <%! @SuppressWarnings("unchecked") %>
 <%
-/*
+/* 예전 방식의 code
 Customer_old[] customers = new Customer_old[] {
     new Customer_old("Doug Henderson",
                 "7804 Jumping Hill Lane",
@@ -29,31 +29,31 @@ if (custMap == null) {  // "custMap"이 존재하지 않으면 새로 생성
     // string은 전화번호, customer는 정보들
     custMap.put("010-111-1111", 
             new Customer("Doug Henderson",
-            	new Address(
+                new Address(
                 "7804 Jumping Hill Lane",
                 "Dallas", "Texas", "75218"), "010-111-1111",
-            	"no-recent-order")
+                "no-recent-order")
     );
     custMap.put("010-222-2222", 
             new Customer("Mary Jenkins",
-            	new Address(
+                new Address(
                 "7081 Teakwood #24C",
                 "Dallas", "Texas", "75182"), "010-222-2222",
-            	"no-recent-order")
+                "no-recent-order")
     );
     custMap.put("010-333-3333", 
             new Customer("John Jacobs",
                 new Address(
-            	"234 East Rutherford Drive",
+                "234 East Rutherford Drive",
                 "Topeka", "Kansas", "66608"), "010-333-3333", 
                 "no-recent-order")
     );
     custMap.put("010-444-4444", 
             new Customer("Happy Traum",
-            	new Address(
+                new Address(
                 "876 Links Circle",
                 "Topeka", "Kansas", "66608"), "010-444-4444",
-            	"no-recent-order")
+                "no-recent-order")
     );  
 /*  
     for (Customer_old c : customers) {      // 배열에 저장된 Customer 객체들을 custMap에 저장
@@ -69,7 +69,7 @@ System.out.println("phone number: " + phone);
 //find a customer having the given phone number
 Customer c = custMap.get(phone);    // "custMap"에서 검색
 if (c != null) {                // unregistered customer
-	/*
+    /*
     String result = c.getName() + "\n" + c.getAddress();
     System.out.println("result: " + result);
     out.clearBuffer();
@@ -98,3 +98,4 @@ String result2 = mapper.writeValueAsString(c);
 System.out.println(result2);        // 변환 결과 확인
 */
 %>
+

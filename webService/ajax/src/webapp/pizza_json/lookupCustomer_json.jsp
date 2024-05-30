@@ -1,6 +1,6 @@
-<%@ page contentType="text/plain; charset=utf-8" %>
+<%@ page contentType="application/json; charset=utf-8" %>
 <%@ page import="example.ajax.pizza.*,java.util.*"%>
-<%-- <%@ page import="com.fasterxml.jackson.databind.*"%>   --%>
+<%@ page import="com.fasterxml.jackson.databind.*"%>
 <%! @SuppressWarnings("unchecked") %>
 <%
 /* 예전 방식의 code
@@ -62,20 +62,13 @@ System.out.println("phone number: " + phone);
 //find a customer having the given phone number
 Customer_old c = custMap.get(phone);	// "custMap"에서 검색
 if (c != null) {				// unregistered customer	
-	String result = c.getName() + "\n" + c.getAddress();
-	System.out.println("result: " + result);
-	out.clearBuffer();
-	out.print(result);
+	ObjectMapper mapper = new ObjectMapper();
+	String result2 = mapper.writeValueAsString(c);
+	System.out.println(result2);		// 변환 결과 확인
+
 }
 else {
 	response.setStatus(400);		// bad request
 	response.addHeader("Status", "Unregistered customer");
 }
-
-/*
-// 참고: Jackson2를 이용한 object-to-JSON 변환
-ObjectMapper mapper = new ObjectMapper();
-String result2 = mapper.writeValueAsString(c);
-System.out.println(result2);		// 변환 결과 확인
-*/
 %>
