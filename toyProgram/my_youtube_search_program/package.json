@@ -1,0 +1,14 @@
+{
+  "name": "my_youtube_search_program",
+  "version": "1.0.0",
+  "description": "my youtube program",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "type": "module",
+  "dependencies": {
+    "express": "^4.19.2",
+    "node-fetch": "^3.3.2"
+  }
+}
