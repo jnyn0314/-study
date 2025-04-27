@@ -1,0 +1,8 @@
+package study.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import study.domain.FoodCategory;
+
+public interface FoodCategoryRepository extends JpaRepository<FoodCategory, Long> {
+    // FoodCategory 관련 CRUD 작업
+}
