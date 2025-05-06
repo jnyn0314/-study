@@ -36,4 +36,15 @@ public class Mission extends BaseEntity {
 
     @Column(nullable = false)
     private String status;
+    @Override
+    public String toString() {
+        return "Mission{" +
+                "id=" + id +
+                ", reward=" + reward +
+                ", deadline=" + deadline +
+                ", missionSpec='" + missionSpec + '\'' +
+                ", storeId=" + (store != null ? store.getId() : null) +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }

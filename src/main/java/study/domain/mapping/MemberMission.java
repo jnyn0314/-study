@@ -33,4 +33,11 @@ public class MemberMission extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY) // 하나의 mission에 대해서 여러개의 memberMission
     @JoinColumn(name = "mission_id") // FK (MemberMission)
     private Mission mission; // mission 필드 추가
+    @Override
+    public String toString() {
+        return "MemberMission{" +
+                "id=" + id +
+                ", status=" + status +
+                '}';
+    }
 }

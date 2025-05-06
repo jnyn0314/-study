@@ -81,3 +81,7 @@ tasks.register("compileQuerydsl", JavaCompile) {
 
 	options.annotationProcessorPath = configurations.annotationProcessor
 }
+dependencies {
+	implementation 'org.hibernate.validator:hibernate-validator:8.0.1.Final'
+	implementation 'org.glassfish:jakarta.el:4.0.2' // Expression Language 지원도 필요함
+}
