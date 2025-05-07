@@ -9,8 +9,10 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import study.domain.Review;
 import study.domain.mapping.MemberMission;
 import study.service.memberMission.MemberMissionService;
+import study.service.review.ReviewQueryService;
 
 import java.util.List;
 
@@ -28,16 +30,5 @@ public class Application {
 		SpringApplication.run(Application.class, args);
 	}
 
-	@Profile("local")
-	@Bean
-	public CommandLineRunner testMemberMission(MemberMissionService service) {
-		return args -> {
-			Long memberId = 1L;
-			String status = CHALLENGING.name();
-			String cursor = null;
-
-			List<MemberMission> missions = service.getMemberMissions(memberId, status, cursor);
-			missions.forEach(System.out::println);
-		};
-	}
+	// 여기에 매번 다르게 설정, 테스트
 }

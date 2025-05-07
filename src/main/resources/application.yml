@@ -4,6 +4,8 @@ spring:
     username: root
     password: F-wFC#2c<Ixh
     driver-class-name: com.mysql.cj.jdbc.Driver
+  profiles:
+    active : local
   sql:
     init:
       mode: never
