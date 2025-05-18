@@ -24,8 +24,6 @@ public class QMission extends EntityPathBase<Mission> {
 
     public final study.domain.common.QBaseEntity _super = new study.domain.common.QBaseEntity(this);
 
-    public final StringPath content = createString("content");
-
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
