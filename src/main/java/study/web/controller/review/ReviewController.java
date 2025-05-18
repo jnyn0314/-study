@@ -1,26 +1,28 @@
 package study.web.controller.review;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import study.domain.Review;
 import study.repository.reviewRepository.ReviewRepository;
+import study.service.review.ReviewService;
+import study.web.dto.review.ReviewCreateRequest;
+import study.web.dto.review.ReviewResponseDto;
 
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/api/reviews")
 @RequiredArgsConstructor
 public class ReviewController {
 
-    private final ReviewRepository reviewRepository;
-
-    @GetMapping
-    public List<Review> findAll() {
-        return reviewRepository.findAll();  // Entity 직접 리턴
-    }
+    private final ReviewService reviewService;
 
     @PostMapping
-    public Review create(@RequestBody Review review) {
-        return reviewRepository.save(review);  // Entity 직접 저장
+    public ResponseEntity<ReviewResponseDto> create(@RequestBody @Valid ReviewCreateRequest request) {
+        ReviewResponseDto response = reviewService.createReview(request);
+        return ResponseEntity.ok(response);
     }
 }

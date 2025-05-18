@@ -1,0 +1,33 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/study
+    username: root
+    password: F-wFC#2c<Ixh
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  profiles:
+    active : local
+  sql:
+    init:
+      mode: never
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+        hbm2ddl:
+          auto: none
+        default_batch_fetch_size: 1000
+
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG               # Hibernate 쿼리 출력
+    org.hibernate.type.descriptor.sql: trace  # SQL 파라미터 출력
+    org.springframework.orm.jpa: DEBUG   # JPA 관련 상세 로그
+
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
