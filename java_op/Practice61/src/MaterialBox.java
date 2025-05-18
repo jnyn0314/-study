@@ -1,4 +1,0 @@
-
-class MaterialBox extends Box {
-		
-}
