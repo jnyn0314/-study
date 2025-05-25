@@ -40,4 +40,9 @@ public class MemberMission extends BaseEntity {
                 ", status=" + status +
                 '}';
     }
+
+    public void complete() {
+        this.status = MissionStatus.COMPLETE;
+    }
+
 }
