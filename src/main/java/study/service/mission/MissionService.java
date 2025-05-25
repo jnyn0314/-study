@@ -9,4 +9,7 @@ import study.web.dto.mission.MissionResponseDto;
 public interface MissionService {
     MissionResponseDto createMission(MissionCreateRequest request);
     Page<MissionResponseDto> getMissionsByStoreId(Long storeId, Pageable pageable);
+
+    Page<MissionResponseDto> getInProgressMissions(Long memberId, Pageable pageable);
+    void completeMission(Long memberId, Long missionId);
 }

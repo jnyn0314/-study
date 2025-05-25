@@ -40,6 +40,9 @@
     <filter-actions connection-id="af1c15bc-888a-428f-a58c-0495a434dd07" dataset="study.store" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="af1c15bc-888a-428f-a58c-0495a434dd07" dataset="study.mission" active-filter-id="" />
   </component>
+  <component name="DBNavigator.Project.ExecutionManager">
+    <retain-sticky-names value="false" />
+  </component>
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />
     <filters />
