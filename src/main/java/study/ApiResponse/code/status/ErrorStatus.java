@@ -28,7 +28,9 @@ public enum ErrorStatus implements BaseErrorCode {
     TEMP_EXCEPTION(HttpStatus.BAD_REQUEST, "TEMP4001", "이거는 테스트"),
 
     // 지역 관련 에러ㅓ.
-    REGION_NOT_FOUND(HttpStatus.NOT_FOUND, "REGION4001", "존재하지 않는 지역입니다.");
+    REGION_NOT_FOUND(HttpStatus.NOT_FOUND, "REGION4001", "존재하지 않는 지역입니다."),
+
+    INVALID_PAGE(HttpStatus.BAD_REQUEST, "PAGE4001", "페이지 번호는 1 이상이어야 합니다.");
 
     private final HttpStatus httpStatus;
     private final String code;

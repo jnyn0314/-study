@@ -4,6 +4,8 @@
 
 package study.repository.missionRepository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,4 +16,6 @@ import java.util.List;
 public interface MissionRepository extends JpaRepository<Mission, Long>, MissionRepositoryCustom {
     @Query("SELECT m FROM MemberMission mm JOIN mm.mission m WHERE mm.member.id = :memberId")
     List<Mission> findAllByMemberId(@Param("memberId") Long memberId);
+
+    Page<Mission> findByStoreId(Long storeId, Pageable pageable);
 }
