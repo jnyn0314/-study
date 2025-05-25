@@ -13,5 +13,6 @@ public class MissionResponseDto {
     private String reward;
     private String missionSpec;
     private LocalDateTime deadline;
-    private String storeName;
+    private String missionStatus;     // 상태값 (예: IN_PROGRESS, COMPLETED 등)
+    private LocalDateTime createdAt;  // 생성일
 }

@@ -1,7 +1,10 @@
 package study.service.mission;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import study.converter.mission.MissionConverter;
 import study.domain.Mission;
 import study.domain.Store;
 import study.repository.missionRepository.MissionRepository;
@@ -39,7 +42,14 @@ public class MissionServiceImpl implements MissionService {
                 .reward(String.valueOf(saved.getReward()))
                 .missionSpec(saved.getMissionSpec())
                 .deadline(saved.getDeadline().atStartOfDay())
-                .storeName(store.getName())
+                // .storeName(store.getName())
                 .build();
     }
+
+    @Override
+    public Page<MissionResponseDto> getMissionsByStoreId(Long storeId, Pageable pageable) {
+        Page<Mission> missions = missionRepository.findByStoreId(storeId, pageable);
+        return missions.map(MissionConverter::toDto); // map으로 변환
+    }
+
 }
