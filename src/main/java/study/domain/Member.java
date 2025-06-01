@@ -5,6 +5,7 @@ import jakarta.persistence.Id;
 import study.domain.common.BaseEntity;
 import study.domain.enums.Gender;
 import study.domain.enums.MemberStatus;
+import study.domain.enums.Role;
 import study.domain.enums.SocialType;
 import study.domain.mapping.MemberAgree;
 import study.domain.mapping.MemberMission;
@@ -63,4 +64,14 @@ public class Member extends BaseEntity {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<MemberMission> memberMissionList = new ArrayList<>();
+
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, columnDefinition = "VARCHAR(10) DEFAULT 'USER'")
+    private Role role;
+
+    public void encodePassword(String encodedPassword) {
+        this.password = encodedPassword;
+    }
 }
