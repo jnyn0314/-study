@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import study.domain.enums.MissionStatus;
 import study.domain.mapping.MemberMission;
 import study.domain.mapping.QMemberMission;
+//import study.domain.mapping.QMemberMission;
 
 import java.util.List;
 import java.util.Optional;

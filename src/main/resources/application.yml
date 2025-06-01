@@ -31,3 +31,9 @@ logging:
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
+
+jwt:
+  token:
+    secretKey: umceightfightingjwttokenauthentication
+    expiration:
+      access: 14400000

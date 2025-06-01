@@ -28,7 +28,11 @@ public enum ErrorStatus implements BaseErrorCode {
     TEMP_EXCEPTION(HttpStatus.BAD_REQUEST, "TEMP4001", "이거는 테스트"),
 
     // 지역 관련 에러ㅓ.
-    REGION_NOT_FOUND(HttpStatus.NOT_FOUND, "REGION4001", "존재하지 않는 지역입니다.");
+    REGION_NOT_FOUND(HttpStatus.NOT_FOUND, "REGION4001", "존재하지 않는 지역입니다."),
+
+
+    INVALID_TOKEN(HttpStatus.NOT_FOUND,"LOGIN0001","유효하지 않은 토큰입니다."),
+    INVALID_PASSWORD(HttpStatus.BAD_REQUEST, "LOGIN0002", "비밀번호가 올바르지 않습니다.");
 
     private final HttpStatus httpStatus;
     private final String code;
