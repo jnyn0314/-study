@@ -47,4 +47,21 @@ public class AmazonS3Manager {
     public String generateReviewKeyName(UuidEntity uuid) {
         return amazonConfig.getReviewPath() + '/' + uuid.getUuid();
     }
+
+    public void deleteFile(String fileUrl) {
+        try {
+            String fileKey = extractKeyFromUrl(fileUrl);
+            amazonS3.deleteObject(bucketName, fileKey);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("파일 삭제 실패", e);
+        }
+    }
+
+    private String extractKeyFromUrl(String fileUrl) {
+        // 버킷 이름 이후의 경로를 추출
+        String bucketUrl = "https://" + bucketName + ".s3.amazonaws.com/";
+        return fileUrl.replace(bucketUrl, "");
+    }
+
+
 }
